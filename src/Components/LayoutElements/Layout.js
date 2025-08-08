@@ -79,7 +79,7 @@ const Layout = ({ children }) => {
 
     return (
 
-        <div style={{scrollbarWidth: 'none'}} className={`w-screen h-screen ${device === 'Desktop' && 'flex flex-row'} bg-[#fff7ed] overscroll-none`}>
+        <div className={`w-screen h-screen ${device === 'Desktop' && 'flex flex-row'} bg-[#fff7ed] overscroll-none`}>
 
             {/*panel &&
                 <>
@@ -116,7 +116,7 @@ const Layout = ({ children }) => {
 
                 {!preview && <Header showNav={() => setShowNav(true)} device={device} />}
 
-                <div className={`${preview ? 'w-full h-full' : 'w-full h-content px-2 pb-1 overflow-scroll'}`}>{children}</div>
+                <div className={`${preview ? 'w-full h-full' : 'w-full h-content px-2 pb-1 overflow-auto'}`}>{children}</div>
 
                 {preview &&
                     <button onClick={() => togglePreview()} type='submit' className="fixed right-8 bottom-8 w-32 h-12 rounded shadow-md border border-white bg-gray-950 py-2 px-4 text-sm mt-14 z-10 text-white data-[hover]:bg-gray-800">

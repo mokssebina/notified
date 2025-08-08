@@ -191,7 +191,6 @@ const Notifications = () => {
 
             <div className='relative w-full flex flex-row h-24'>
 
-
                 <div className='w-1/4 h-full'>
                     <div className='relative w-full px-3'>
 
@@ -253,7 +252,7 @@ const Notifications = () => {
 
                 </div>
 
-                <div className={`w-3/4 h-auto flex flex-col px-3 overflow-scroll ${(newMessage || editMessage) && 'border border-gray-950 rounded-lg'}`}>
+                <div className={`w-3/4 h-auto flex flex-col px-3 overflow-auto ${(newMessage || editMessage) && 'border border-gray-950 rounded-lg'}`}>
 
                     {newMessage &&
                         <CreateNotification

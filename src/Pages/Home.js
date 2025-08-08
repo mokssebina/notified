@@ -198,7 +198,7 @@ const Home = () => {
       <ProjectDialog open={newProjectOpen} closeModal={closeNewModal} userId={session?.user.id} />
       <EditProjectDialog open={editProjectOpen} closeModal={closeEditModal} userId={session?.user.id} editData={editProject} />
       <DeleteModal open={projectDelete} confirm={confirmProjectDelete} closeConfirm={closeDeleteModal} deleteProjectLoading={deleteProjectLoading} />
-      <div className='relative w-full flex flex-col p-4'>
+      <div style={{scrollbarWidth: 'none'}} className='relative w-full h-full flex flex-col p-4'>
 
         <div className='w-full lg:w-10/12 h-24 flex flex-col py-4 mt-10 mx-auto'>
 
