@@ -125,7 +125,7 @@ const UpdateNotification = ({ close, enabled, setEnabled, editMessageItem, messa
                         <SelectInput
                             label={'Select message type'}
                             selectedProject={editProjectMessage?.values.messageType}
-                            handleSelect={() => editProjectMessage?.setFieldValue('messageType')}
+                            handleSelect={(e) => editProjectMessage?.setFieldValue('messageType', e.target.value)}
                             projects={
                                 messageType?.map((item) => (
                                     <option key={item?.id} value={item?.type}>{item?.type}</option>
@@ -137,7 +137,7 @@ const UpdateNotification = ({ close, enabled, setEnabled, editMessageItem, messa
                         <SelectInput
                             label={'Select message position'}
                             selectedProject={editProjectMessage?.values.position}
-                            handleSelect={() => editProjectMessage?.setFieldValue('position')}
+                            handleSelect={(e) => editProjectMessage?.setFieldValue('position', e.target.value)}
                             projects={
                                 messagePosition?.map((item) => (
                                     <option key={item?.id} value={item?.value}>{item?.position}</option>

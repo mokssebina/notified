@@ -63,7 +63,12 @@ const Notifications = () => {
     const [backgroundColor, setBackgroundColor] = useState('#ffffff')
     const [textColor, setTextColor] = useState('#000000')
 
-
+    /*
+    let messagePosition = [
+        { id: 1, position: 'Top of page', value: 'top' },
+        { id: 2, position: 'Bottom of page', value: 'bottom' }
+    ]
+    */
     let messagePosition = [
         { id: 1, position: 'Top of page', value: 'top' },
         { id: 2, position: 'Bottom of page', value: 'bottom' }

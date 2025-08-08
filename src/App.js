@@ -8,7 +8,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { AuthContextProvider } from './Context/AuthContext';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import { NotifyProvider } from 'react-notify-sdk'
+import { NotifyProvider } from 'react-notify-sdk';
 
 
 function App() {
