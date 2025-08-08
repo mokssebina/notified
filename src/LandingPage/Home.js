@@ -8,7 +8,6 @@ import Editor from './Editor'
 
 //////////////---Image imports---////////////////////
 import logoImage from '../Assets/images/notified-01.png'
-import { events } from '@react-three/fiber'
 
 
 const LandingPage = () => {
