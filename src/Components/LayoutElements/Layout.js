@@ -79,7 +79,7 @@ const Layout = ({ children }) => {
 
     return (
 
-        <div className={`w-screen h-screen ${device === 'Desktop' && 'flex flex-row'} bg-[#fff7ed] overscroll-none`}>
+        <div style={{scrollbarWidth: 'none'}} className={`w-screen h-screen ${device === 'Desktop' && 'flex flex-row'} bg-[#fff7ed] overscroll-none`}>
 
             {/*panel &&
                 <>
