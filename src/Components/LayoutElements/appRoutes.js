@@ -10,8 +10,8 @@ export const navRoutes = [
     },
     {
         id: '2',
-        path: '/notifications',
-        title: 'Notifications',
+        path: '/messages',
+        title: 'Messages',
         icon: <ChatBubbleLeftIcon fontSize={24} />
     },
     {

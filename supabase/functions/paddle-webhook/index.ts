@@ -31,52 +31,75 @@ Deno.serve(async (req) => {
 // supabase/functions/paddle-webhook/index.ts
 //import { serve } from 'https://deno.land/std@0.177.0/http/server.ts'
 
-const SUPABASE_URL = Deno.env.get('REACT_APP_SUPABASE_URL');
-const SERVICE_ROLE_KEY = Deno.env.get('SERVICE_ROLE_KEY');
+const SUPABASE_URL = Deno.env.get("REACT_APP_SUPABASE_URL");
+const SERVICE_ROLE_KEY = Deno.env.get("SERVICE_ROLE_KEY");
 
 Deno.serve(async (req: Request) => {
-  if (req.method !== 'POST') {
-    return new Response('Method Not Allowed', { status: 405 })
+  if (req.method !== "POST") {
+    return new Response("Method Not Allowed", { status: 405 });
   }
 
-  const body = await req.json()
-  const eventType = body.event_type
+  const body = await req.json();
+  const eventType = body.event_type;
 
   // Simple logging to check structure (remove in prod)
-  console.log('Received Paddle event:', eventType)
+  console.log("Received Paddle event:", eventType);
 
   // Example: Handle subscription activation
-  if (eventType === 'subscription_created') {
-    const userEmail = body.data?.user_email
-    const subscriptionId = body.data?.subscription_id
-    const planName = body.data?.plan_name
+  if (
+    eventType === "subscription_created" || eventType === "subscription_updated"
+  ) {
+    const userEmail = body.data.user_email;
+    const subscriptionId = body.data.subscription_id;
+    const planName = body.data.plan_name;
+    const startedAt = body.data.created_at;
+    const status = body.data.status;
 
     if (!SUPABASE_URL || !SERVICE_ROLE_KEY) {
-      throw new Error('Missing Supabase environment variables');
+      throw new Error("Missing Supabase environment variables");
+    }
+
+    // Lookup user_id by userEmail in Supabase auth.users table
+    const userResponse = await fetch(
+      `${SUPABASE_URL}/auth/v1/users?email=${userEmail}`,
+      {
+        headers: {
+          "apikey": SERVICE_ROLE_KEY!,
+          "Authorization": `Bearer ${SERVICE_ROLE_KEY}`,
+        },
+      },
+    );
+    const users = await userResponse.json();
+    const userId = users[0]?.id;
+
+    if (!userId) {
+      return new Response("User not found", { status: 404 });
     }
 
     // Optionally store this in your Supabase DB
     const res = await fetch(`${SUPABASE_URL}/rest/v1/subscriptions`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'apikey': SERVICE_ROLE_KEY!,
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${SERVICE_ROLE_KEY}`
+        "apikey": SERVICE_ROLE_KEY!,
+        "Authorization": `Bearer ${SERVICE_ROLE_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "resolution=merge-duplicates", // upsert
       },
       body: JSON.stringify({
-        user_email: userEmail,
+        user_id: userId,
         subscription_id: subscriptionId,
         plan_name: planName,
-      })
-    })
+        status: status,
+        started_at: startedAt,
+      }),
+    });
 
     if (!res.ok) {
-      return new Response('Failed to save subscription', { status: 500 })
+      return new Response("Failed to save subscription", { status: 500 });
     }
 
-    return new Response('Subscription saved', { status: 200 })
+    return new Response("Subscription saved", { status: 200 });
   }
 
-  return new Response('Unhandled event', { status: 200 })
-})
-
+  return new Response("Unhandled event", { status: 200 });
+});

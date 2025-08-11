@@ -27,9 +27,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 
 //////////////---Screen imports---////////////////////
+import PageHeader from '../Components/LayoutElements/PageHeader';
 import SelectInput from '../Components/Inputs/SelectInput';
 import UpdateNotification from '../Components/ScreenElements/NotificationsPageElements/UpdateNotification';
-import { NotificationItem } from '../Components/ScreenElements/NotificationsPageElements/NotificationItem';
+import NotificationItem from '../Components/ScreenElements/NotificationsPageElements/NotificationItem';
 import CreateNotification from '../Components/ScreenElements/NotificationsPageElements/CreateNotification';
 import NotificationLoaderItem from '../Components/ScreenElements/NotificationsPageElements/NotificationLoaderItem';
 
@@ -130,6 +131,7 @@ const Notifications = () => {
     }
 
     const closeEdit = () => {
+        console.log("console log: ", 'closed')
         setEditMessage(false)
         setSelectedId('')
         setSelectedProject(null)
@@ -146,13 +148,15 @@ const Notifications = () => {
             console.log("projects exist")
             toast.success("The notification has been created.")
             dispatch(updateProject({
-                title: selectedProject?.title,
-                description: selectedProject?.description,
-                messageCount: selectedProject?.messageCount + 1,
-                key: selectedProject?.key
+                /*
+                title: selecteditem?.title,
+                description: selecteditem?.description,
+                messageCount: selecteditem?.messageCount + 1,
+                key: selecteditem?.key
+            */
             }))
             dispatch(resetSubmitMessage())
-            dispatch(getProjectMessages(selectedProject.key))
+            dispatch(getProjectMessages(''))
             setNewMessage(false)
             setSelectedProject(null)
         }
@@ -163,7 +167,7 @@ const Notifications = () => {
             console.log("projects exist")
             toast.error(submitMessageError)
             dispatch(resetSubmitMessage())
-            dispatch(getProjectMessages(selectedProject?.key))
+            dispatch(getProjectMessages(''))
         }
     }, [submitMessageError])
 
@@ -173,7 +177,7 @@ const Notifications = () => {
         if (updatedMessage) {
             toast.success("The notification has been updated.")
             dispatch(resetUpdateMessageResponse())
-            dispatch(getProjectMessages(selectedProject?.key))
+            dispatch(getProjectMessages(''))
             setEditMessageItem(null)
             setEditMessage(false)
             //setSelectedId('')
@@ -194,105 +198,88 @@ const Notifications = () => {
     return (
         <div className='relative w-full h-full flex flex-col mx-auto rounded-lg'>
 
-            <div className='relative w-full flex flex-row h-24'>
+            <UpdateNotification
+                open={editMessage}
+                close={closeEdit}
+                enabled={enabled}
+                setEnabled={setEnabled}
+                selectedProject={selectedProject}
+                editMessageItem={editMessageItem}
+                messageType={messageType}
+                messagePosition={messagePosition}
+                backgroundColor={backgroundColor}
+                setBackgroundColor={setBackgroundColor}
+                textColor={textColor}
+                setTextColor={setTextColor}
+            />
 
-                <div className='w-1/4 h-full'>
-                    <div className='relative w-full px-3'>
+            <div className='w-full lg:w-10/12 flex flex-col py-4 mx-auto'>
 
-                        {/*<InputLoader />*/}
+                <PageHeader title={'Messages'} />
 
-                        <SelectInput
-                            label={'Select project'}
-                            selectedProject={selectedId}
-                            handleSelect={handleSelect}
-                            projects={
-                                projects?.map((item) => (
-                                    <option key={item?.id} value={item?.id}>{item?.title}</option>
-                                ))
-                            }
-                        />
+                <div className='w-full h-full flex flex-row'>
+
+                    <div className='relative w-1/2 flex flex-col'>
+
+                        <div className='w-full sm:w-72'>
+
+                            <SelectInput
+                                label={'Select project'}
+                                selectedProject={selectedId}
+                                handleSelect={handleSelect}
+                                projects={
+                                    projects?.map((item) => (
+                                        <option key={item?.id} value={item?.id}>{item?.title}</option>
+                                    ))
+                                }
+                            />
+
+                        </div>
 
                     </div>
+
+                    <div className={`w-full md:w-1/2 flex flex-row px-3`}>
+
+                        <Tooltip title={(newMessage || editMessage) && "Select a project to create a notification."}>
+                            <button disabled={newMessage || editMessage} onClick={createNewMessage} className={`w-40 h-12 ml-auto px-3 my-4 rounded-lg border ${!false ? 'bg-slate-500' : 'bg-slate-950'} text-white align-middle`}>
+                                <div className='flex flex-row space-x-2 align-middle'>
+                                    <Add />
+                                    <p>Create New</p>
+                                </div>
+                            </button>
+                        </Tooltip>
+
+                    </div>
+
                 </div>
 
             </div>
 
-            <div className='w-full h-page flex flex-row'>
+            <div className='w-full lg:w-10/12 flex flex-col mt-12 mx-auto'>
 
-                <div className='relative w-1/4 h-auto px-3 flex flex-col'>
+                {selectedProject &&
 
-                    <Tooltip title={(newMessage || editMessage) && "Select a project to create a notification."}>
-                        <button disabled={newMessage || editMessage} onClick={createNewMessage} className={`w-40 h-12 py-3 px-3 my-4 rounded-lg border ${!selectedProject?.key ? 'bg-slate-500' : 'bg-slate-950'} text-white align-middle`}>
-                            <div className='flex flex-row space-x-2 align-middle'>
-                                <Add />
-                                <p>Create New</p>
-                            </div>
-                        </button>
-                    </Tooltip>
+                    <div className='w-full'>
 
-                    {selectedProject &&
-                        <>
-                            <div className='w-1/4 mb-3'>
-                                <p className='font-semibold mt-3 text-lg text-left align-middle'>Notifications</p>
-                            </div>
+                        {projectMessagesLoading && <NotificationLoaderItem />}
 
-                            <div className='w-full'>
+                        {(!projectMessagesLoading && projectMessages?.length > 0) &&
+                            <>
+                                {projectMessages?.slice()
+                                    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).map((item) => (
+                                        <NotificationItem key={item?.id} title={item?.title} projectKey={item?.project_key} content={item?.content}
+                                            enabled={item?.is_active} position={item?.position} route={item?.route} type={item?.type} editMessage={() => openEditMessage(item)}
+                                            deleteMessage={() => openDeleteMessage(item?.id)}
+                                        />
+                                    ))}
+                            </>
+                        }
 
-                                {projectMessagesLoading && <NotificationLoaderItem />}
+                        {(!projectMessagesLoading && !projectMessages?.length) && <p className='font-semibold text-sm text-gray-500 mt-6'>There are no message for this item...</p>}
 
-                                {(!projectMessagesLoading && projectMessages?.length > 0) &&
-                                    <>
-                                        {projectMessages?.slice()
-                                            .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).map((item) => (
-                                                <NotificationItem key={item?.id} title={item?.title} editMessage={() => openEditMessage(item)} deleteMessage={() => openDeleteMessage(item?.id)} />
-                                            ))}
-                                    </>
-                                }
+                    </div>
 
-                                {(!projectMessagesLoading && !projectMessages?.length) && <p className='font-semibold text-sm text-gray-500 mt-6'>There are no message for this project...</p>}
-
-                            </div>
-                        </>
-                    }
-
-                </div>
-
-                <div className={`w-3/4 h-auto flex flex-col px-3 overflow-auto ${(newMessage || editMessage) && 'border border-gray-950 rounded-lg'}`}>
-
-                    {newMessage &&
-                        <CreateNotification
-                            close={closeCreate}
-                            enabled={enabled}
-                            setEnabled={setEnabled}
-                            selectedProject={selectedProject}
-                            messageType={messageType}
-                            messagePosition={messagePosition}
-                            backgroundColor={backgroundColor}
-                            setBackgroundColor={setBackgroundColor}
-                            textColor={textColor}
-                            setTextColor={setTextColor}
-                        />
-                    }
-
-                    {editMessage &&
-                        <div className='w-full h-full'>
-                            <UpdateNotification
-                                close={closeEdit}
-                                enabled={enabled}
-                                setEnabled={setEnabled}
-                                selectedProject={selectedProject}
-                                editMessageItem={editMessageItem}
-                                messageType={messageType}
-                                messagePosition={messagePosition}
-                                backgroundColor={backgroundColor}
-                                setBackgroundColor={setBackgroundColor}
-                                textColor={textColor}
-                                setTextColor={setTextColor}
-                            />
-                        </div>
-                    }
-
-                </div>
+                }
 
             </div>
 
@@ -301,3 +288,18 @@ const Notifications = () => {
 }
 
 export default Notifications
+
+{/*newMessage &&
+    <CreateNotification
+        close={closeCreate}
+        enabled={enabled}
+        setEnabled={setEnabled}
+        selectedProject={selectedProject}
+        messageType={messageType}
+        messagePosition={messagePosition}
+        backgroundColor={backgroundColor}
+        setBackgroundColor={setBackgroundColor}
+        textColor={textColor}
+        setTextColor={setTextColor}
+    />
+*/}

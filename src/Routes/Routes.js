@@ -40,6 +40,7 @@ const AppRoutes = () => {
       <Route path={'/'} element={<PublicRoutes authUser={session?.user} />}>
 
         <Route index path={'/'} element={<Navigate to='/signin' />} />
+        {/*<Route index element={<LandingPage />} />*/}
         <Route path={'/signin'} element={<Signin />} />
         <Route path={'/signup'} element={<Signup />} />
 
@@ -50,7 +51,7 @@ const AppRoutes = () => {
 
         <Route index path={'/'} element={<Navigate to='/projects' />} />
         <Route path={'/projects'} element={<Home />} />
-        <Route path={'/notifications'} element={<Notifications />} />
+        <Route path={'/messages'} element={<Notifications />} />
         <Route path={'/subscriptions'} element={<Subscription />} />
         <Route path={'/account'} element={<Account />} />
 

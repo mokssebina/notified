@@ -1,31 +1,76 @@
 import React from 'react'
 
-import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
+//////////////---Headless UI imports---////////////////////
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 
-export const NotificationItem = ({ title, editMessage, deleteMessage }) => {
+//////////////---MUI imports---////////////////////
+import { Tooltip } from '@mui/material'
+
+//////////////---Icon imports---////////////////////
+import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import { PencilSquareIcon, TrashIcon, ClipboardDocumentIcon } from '@heroicons/react/24/outline'
+import clsx from 'clsx'
+
+
+
+const NotificationItem = ({ title, projectKey, enabled, position, content, route, type, editMessage, deleteMessage }) => {
     return (
-        <div className='relative w-full h-12 mb-1 flex flex-row cursor-pointer rounded-lg border border-gray-950'>
+        <Disclosure as="div" className='w-full rounded-lg mb-2 border-2 border-slate-900'>
 
-            <div className='relative w-3/5 h-full p-3'>
-                <p className='text-base font-semibold'>{title}</p>
-            </div>
-
-            <div className='h-12 py-[2px] flex flex-row ml-auto'>
-
-                <button onClick={editMessage} className='relative w-11 h-11 p-1'>
-                    <div className='w-full h-full p-[6px] rounded-md hover:border-[1.5px] border-slate-950'>
-                        <PencilSquareIcon className='size-6' />
+            {({ open }) => (
+                <>
+                    <div className="w-full py-2 px-2 lg:px-4">
+                        <div className='w-full h-12 flex flex-row'>
+                            <div className='w-1/2 h-full flex flex-row items-center'>
+                                <Tooltip title='Edit the project description'>
+                                    <PencilSquareIcon onClick={editMessage} className={clsx('w-5 cursor-pointer')} />
+                                </Tooltip>
+                                <p className='text-sm md:text-base text-left ml-6'>{`Title:  ${title}`}</p>
+                            </div>
+                            <div className='w-1/2 h-full items-center flex flex-row'>
+                                <div className='h-full ml-auto flex flex-row items-center'>
+                                    <p className='text-base text-right mr-3'>{`Project Key:  ${projectKey}`}</p>
+                                    <Tooltip title='Delete the project!' className='ml-5'>
+                                        <TrashIcon onClick={deleteMessage} className={clsx('w-5 cursor-pointer')} />
+                                    </Tooltip>
+                                </div>
+                                <DisclosureButton className={'w-12 h-12 ml-12'}>
+                                    <ChevronRightIcon className={clsx('w-5 mx-auto', open && 'rotate-90')} />
+                                </DisclosureButton>
+                            </div>
+                        </div>
                     </div>
-                </button>
+                    <DisclosurePanel className="text-gray-500">
+                        <div className='w-full h-auto py-2 px-2 lg:px-4 flex flex-col'>
 
-                <button onClick={deleteMessage} className='relative w-11 h-11 p-1'>
-                    <div className='w-full h-full p-[6px] rounded-md hover:border-[1.5px] border-slate-950'>
-                        <TrashIcon className='size-6' />
-                    </div>
-                </button>
+                            <div className='w-full py-1 flex flex-col md:flex-row'>
+                                <div className='w-full md:w-1/2'>
+                                    <p className='text-xs md:text-sm font-semibold'>{`Status: ${enabled ? 'Enabled' : 'Disabled'}`}</p>
+                                </div>
+                                <div className='w-full md:w-1/2'>
+                                    <p className='text-xs md:text-sm font-semibold'>{`Position: ${position}`}</p>
+                                </div>
+                            </div>
 
-            </div>
+                            <div className='w-full py-1 flex flex-col md:flex-row'>
+                                <div className='w-full md:w-1/2'>
+                                    <p className='text-xs md:text-sm font-semibold'>{`Route: ${route}`}</p>
+                                </div>
+                                <div className='w-full md:w-1/2'>
+                                    <p className='text-xs md:text-sm font-semibold'>{`Type: ${type}`}</p>
+                                </div>
+                            </div>
 
-        </div>
+                            <div className='w-full h-16 py-1 flex flex-col md:flex-row'>
+                                <p className='text-xs md:text-sm text-left'>{`Message: ${content}`}</p>
+                            </div>
+                        </div>
+                    </DisclosurePanel>
+                </>
+            )}
+
+        </Disclosure>
     )
 }
+
+export default NotificationItem

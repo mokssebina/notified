@@ -8,8 +8,8 @@ import clsx from 'clsx';
 //////////////---Material UI imports---///////////////
 import { Tooltip, CircularProgress, Divider } from '@mui/material';
 
-//////////////---Material UI imports---////////////////////
-import { CloseOutlined } from '@mui/icons-material'
+//////////////---Icon imports---////////////////////
+import CloseIcon from '@mui/icons-material/Close';
 
 //////////////---Yup imports---////////////////////
 import * as Yup from 'yup';
@@ -103,7 +103,7 @@ const CreateNotification = ({ close, enabled, setEnabled, selectedProject, messa
 
                 <button onClick={close} className='w-8 h-8 ml-auto align-middle'>
                     <div className='flex flex-row space-x-2 align-middle'>
-                        <CloseOutlined />
+                        <CloseIcon />
                     </div>
                 </button>
 
