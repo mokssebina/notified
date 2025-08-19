@@ -29,9 +29,9 @@ const ProjectItem = ({ projectName, projectKey, description, editProject, delete
                             </div>
                             <div className='w-1/2 h-full items-center flex flex-row'>
                                 <div className='h-full ml-auto flex flex-row items-center'>
-                                    <p className='text-base text-right mr-3'>{`Project Key:  ${projectKey}`}</p>
-                                    <Tooltip title='Copy the project key'>
-                                        <ClipboardDocumentIcon onClick={copyText} className={clsx('w-5 cursor-pointer')} />
+                                    <p className='hidden md:block text-base text-right mr-3'>{`Project Key:  ${projectKey}`}</p>
+                                    <Tooltip title='Copy the project key' className='hidden md:block '>
+                                        <ClipboardDocumentIcon onClick={copyText} className={clsx('hidden md:block w-5 cursor-pointer')} />
                                     </Tooltip>
                                     <Tooltip title='Delete the project!' className='ml-5'>
                                         <TrashIcon onClick={deleteProject} className={clsx('w-5 cursor-pointer')} />

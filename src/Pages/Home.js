@@ -197,7 +197,7 @@ const Home = () => {
         */}
       <ProjectDialog open={newProjectOpen} closeModal={closeNewModal} userId={session?.user.id} />
       <EditProjectDialog open={editProjectOpen} closeModal={closeEditModal} userId={session?.user.id} editData={editProject} />
-      <DeleteModal open={projectDelete} confirm={confirmProjectDelete} closeConfirm={closeDeleteModal} deleteProjectLoading={deleteProjectLoading} />
+      <DeleteModal confirmationText={'Are you sure you want to delete this project?'} open={projectDelete} confirm={confirmProjectDelete} closeConfirm={closeDeleteModal} deleteProjectLoading={deleteProjectLoading} />
       <div style={{scrollbarWidth: 'none'}} className='relative w-full h-full flex flex-col'>
 
         <div className='w-full lg:w-10/12 flex flex-col py-4 mx-auto'>

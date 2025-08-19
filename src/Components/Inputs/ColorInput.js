@@ -5,7 +5,7 @@ import { HexColorPicker } from 'react-colorful'
 
 //////////////---Headless ui imports---////////////////////
 import clsx from 'clsx';
-import { Description, Input, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+import { Description, Input, Popover, PopoverButton, PopoverPanel, Portal } from '@headlessui/react'
 
 
 const ColorInput = ({ label, type, value, color, setColor, onChange }) => {
@@ -18,7 +18,7 @@ const ColorInput = ({ label, type, value, color, setColor, onChange }) => {
                         <PopoverButton className='w-full h-12 rounded-lg border border-gray-500 p-1'>
                             <div style={{ backgroundColor: `${color}` }} className={`w-full h-full rounded-md bg-slate-500`}></div>
                         </PopoverButton>
-                        <PopoverPanel anchor='right' className='w-64 aspect-square'>
+                        <PopoverPanel transition anchor='right' className='p-2 aspect-square z-50 rounded-lg border border-gray-950 bg-white'>
                             <div className='w-full'>
                                 <HexColorPicker color={color} onChange={setColor} />
                             </div>

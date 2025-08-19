@@ -11,7 +11,7 @@ import { Skeleton, CircularProgress, Divider } from '@mui/material';
 
 
 
-const DeleteModal = ({ confirm, closeConfirm, open, deleteProjectLoading }) => {
+const DeleteModal = ({ confirm, closeConfirm, open, deleteProjectLoading, confirmationText }) => {
   return (
     <Dialog open={open} as="div" className="relative z-10 focus:outline-none" onClose={() => {}}>
             <DialogBackdrop className="fixed inset-0 bg-black/30" />
@@ -31,7 +31,7 @@ const DeleteModal = ({ confirm, closeConfirm, open, deleteProjectLoading }) => {
                         </div>
 
                         <p className="mt-2 text-sm/6 text-gray-950">
-                            Are you sure you want to delete this Project?
+                            {confirmationText}
                         </p>
                         <div className="relative w-full mt-4">
                             <button

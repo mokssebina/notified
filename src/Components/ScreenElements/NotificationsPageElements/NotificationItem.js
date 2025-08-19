@@ -29,7 +29,7 @@ const NotificationItem = ({ title, projectKey, enabled, position, content, route
                             </div>
                             <div className='w-1/2 h-full items-center flex flex-row'>
                                 <div className='h-full ml-auto flex flex-row items-center'>
-                                    <p className='text-base text-right mr-3'>{`Project Key:  ${projectKey}`}</p>
+                                    <p className='hidden md:block text-base text-right mr-3'>{`Project Key:  ${projectKey}`}</p>
                                     <Tooltip title='Delete the project!' className='ml-5'>
                                         <TrashIcon onClick={deleteMessage} className={clsx('w-5 cursor-pointer')} />
                                     </Tooltip>
@@ -43,20 +43,20 @@ const NotificationItem = ({ title, projectKey, enabled, position, content, route
                     <DisclosurePanel className="text-gray-500">
                         <div className='w-full h-auto py-2 px-2 lg:px-4 flex flex-col'>
 
-                            <div className='w-full py-1 flex flex-col md:flex-row'>
-                                <div className='w-full md:w-1/2'>
+                            <div className='w-full py-1 flex md:flex-row'>
+                                <div className='w-1/2'>
                                     <p className='text-xs md:text-sm font-semibold'>{`Status: ${enabled ? 'Enabled' : 'Disabled'}`}</p>
                                 </div>
-                                <div className='w-full md:w-1/2'>
+                                <div className='w-1/2'>
                                     <p className='text-xs md:text-sm font-semibold'>{`Position: ${position}`}</p>
                                 </div>
                             </div>
 
-                            <div className='w-full py-1 flex flex-col md:flex-row'>
-                                <div className='w-full md:w-1/2'>
+                            <div className='w-full py-1 flex md:flex-row'>
+                                <div className='w-1/2'>
                                     <p className='text-xs md:text-sm font-semibold'>{`Route: ${route}`}</p>
                                 </div>
-                                <div className='w-full md:w-1/2'>
+                                <div className='w-1/2'>
                                     <p className='text-xs md:text-sm font-semibold'>{`Type: ${type}`}</p>
                                 </div>
                             </div>

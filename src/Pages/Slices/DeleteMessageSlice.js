@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { supabase } from "../../supabase/supabaseClient";
 
 
-export const deleteProjectMessage = createAsyncThunk("deleteprojectMessage/deleteProjectMessage", async (id, { rejectWithValue }) => {
+export const deleteMessage = createAsyncThunk("deleteMessage/deleteProjectMessage", async (id, { rejectWithValue }) => {
     try {
         const { data, error } = await supabase
             .from("feature_messages")
@@ -25,32 +25,32 @@ const initialState = {
     deletedMessageError: null,
 }
 
-const deleteProjectMessageSlice = createSlice({
-    name: "deleteprojectMessage",
+const deleteMessageSlice = createSlice({
+    name: "deleteMessage",
     initialState,
     reducers: {
-        resetDeleteCardMessage: (state,action) => {
+        resetDeleteMessage: (state,action) => {
             return initialState
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(deleteProjectMessage.pending, (state) => {
+            .addCase(deleteMessage.pending, (state) => {
                 state.deletedMessageLoading = true;
                 state.deletedMessageError = null;
             })
-            .addCase(deleteProjectMessage.fulfilled, (state, action) => {
+            .addCase(deleteMessage.fulfilled, (state, action) => {
                 state.deletedMessageLoading = false;
                 state.deletedMessage = action.payload;
             })
-            .addCase(deleteProjectMessage.rejected, (state, action) => {
+            .addCase(deleteMessage.rejected, (state, action) => {
                 state.deletedMessageLoading = false;
                 state.deletedMessageError = action.error.message;
             })
     },
 });
 
-export const { resetDeleteCardMessage } = deleteProjectMessageSlice.actions
+export const { resetDeleteMessage } = deleteMessageSlice.actions
 
-export default deleteProjectMessageSlice.reducer;
+export default deleteMessageSlice.reducer;
 

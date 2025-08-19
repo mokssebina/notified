@@ -1,7 +1,6 @@
 //////////////---React imports---////////////////////
 import React, { Fragment, useEffect, useState, useRef } from 'react';
 
-
 //////////////---Headless ui imports---////////////////////
 import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle, Switch, Input } from '@headlessui/react'
 import clsx from 'clsx';
@@ -42,7 +41,14 @@ const UpdateNotification = ({ open, close, enabled, setEnabled, editMessageItem,
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        if(editMessageItem){
+            console.log("edit item: ",editMessageItem)
+        }
+    },[editMessageItem])
+
     const editProjectMessage = useFormik({
+        enableReinitialize: true,
         initialValues: {
             enabled: enabled,
             projectKey: editMessageItem?.project_key,
@@ -79,15 +85,26 @@ const UpdateNotification = ({ open, close, enabled, setEnabled, editMessageItem,
         }
     })
 
+    useEffect(() => {
+        if(editProjectMessage?.initialValues){
+            console.log("initial values: ",editProjectMessage?.initialValues)
+        }
+    },[])
+
     return (
         <Dialog open={open} as="div" className="relative z-10 focus:outline-none" onClose={() => { }}>
+
             <DialogBackdrop className="fixed inset-0 bg-black/30" />
+
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+
                 <div className="flex min-h-full items-center justify-center p-4">
+
                     <DialogPanel
                         transition
-                        className="w-full md:w-4/5 lg:w-3/5 flex flex-col rounded-lg shadow-xl p-6 border backdrop-blur-2xl bg-white duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                        className="w-full md:w-4/5 lg:w-3/5 flex flex-col rounded-lg shadow-xl p-2 md:p-6 border backdrop-blur-2xl bg-[#fff7ed] duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
                     >
+                        
                         <div className='w-full h-9 flex flex-row'>
                             <DialogTitle as="h3" className="text-base/7 font-medium text-gray-950">
                                 Update notification
@@ -164,7 +181,7 @@ const UpdateNotification = ({ open, close, enabled, setEnabled, editMessageItem,
 
                                 </div>
 
-                                <div className='relative w-full p-3'>
+                                <div className='relative w-full p-1 md:p-3'>
 
                                     <div className='relative w-full h-full py-1'>
                                         <TextAreaInput label={'Message Content'} type={'text'} placeholder={'Insert message content'} name={'messageContent'} value={editProjectMessage?.values.messageContent} onChange={editProjectMessage?.handleChange('messageContent')} />

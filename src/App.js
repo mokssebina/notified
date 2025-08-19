@@ -17,7 +17,7 @@ function App() {
     <Provider store={store}>
       <AuthContextProvider>
         <BrowserRouter>
-          <NotifyProvider projectId='j4NC99AgxU4eD-' />
+          <NotifyProvider projectId='LWTqYqSqwZlISK' />
           <Toaster />
           <AppRoutes />
         </BrowserRouter>

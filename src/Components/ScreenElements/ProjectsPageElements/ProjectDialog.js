@@ -87,13 +87,13 @@ const ProjectDialog = ({ open, closeModal, userId }) => {
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel
             transition
-            className="w-full md:w-4/5 flex flex-col rounded-lg shadow-xl p-6 border backdrop-blur-2xl bg-white duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+            className="w-full sm:w-96 flex flex-col rounded-lg shadow-xl p-6 border backdrop-blur-2xl bg-white duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
           >
             <div className='w-full h-9 flex flex-col'>
               <DialogTitle as="h3" className="text-base/7 font-medium text-gray-950">
                 Create a project
               </DialogTitle>
-              <button type='button' disabled={createProjectLoading} onClick={closeCreateProject} className='absolute w-10 h-6 p-1 right-4'>
+              <button type='button' disabled={createProjectLoading} onClick={closeCreateProject} className='absolute w-10 h-6 p1 right-4'>
                 <CloseIcon />
               </button>
             </div>
