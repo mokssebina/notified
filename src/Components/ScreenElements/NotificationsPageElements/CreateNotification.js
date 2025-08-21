@@ -54,6 +54,7 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
         initialValues: {
             enabled: enabled,
             projectKey: selectedProject?.key,
+            projectId: selectedProject?.id,
             messageType: 'Information',
             route: '',
             messageTitle: '',

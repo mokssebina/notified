@@ -10,6 +10,7 @@ export const submitProjectMessage = createAsyncThunk("submitmessage/submitProjec
       .insert({
         "is_active": messageData?.enabled,
         "project_key": messageData?.projectKey,
+        "project_id": messageData.projectId,
         "type": messageData?.messageType,
         "route": messageData?.route,
         "title": messageData?.title,

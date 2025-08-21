@@ -9,15 +9,18 @@ import { AuthContextProvider } from './Context/AuthContext';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { NotifyProvider } from 'react-notify-sdk';
+import { useAuth } from './Context/AuthContext';
 
 
 function App() {
+
+  const { session } = useAuth()
 
   return (
     <Provider store={store}>
       <AuthContextProvider>
         <BrowserRouter>
-          <NotifyProvider projectId='LWTqYqSqwZlISK' />
+          <NotifyProvider projectKey='LWTqYqSqwZlISK' onClear={session?.user} />
           <Toaster />
           <AppRoutes />
         </BrowserRouter>
