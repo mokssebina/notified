@@ -206,14 +206,14 @@ const Home = () => {
 
           <div className='w-full h-12 flex flex-row mx-auto'>
 
-            <button onClick={createNew} className='h-12 py-3 px-3 rounded-lg bg-slate-950 text-white align-middle'>
+            <button onClick={createNew} className='h-12 py-3 px-3 rounded-lg bg-primary text-foreground border border-foreground align-middle'>
               <div className='flex flex-row space-x-2 align-middle'>
                 <Add />
                 <p>New Project</p>
               </div>
             </button>
 
-            <button onClick={refreshProjects} className='relative h-12 py-3 px-3 ml-auto rounded-lg border border-slate-950 text-slate-950 align-middle'>
+            <button onClick={refreshProjects} className='relative h-12 py-3 px-3 ml-auto rounded-lg border border-primary text-primary align-middle'>
               <div className='flex flex-row space-x-2 align-middle'>
                 <Refresh />
                 <p>Refresh</p>
@@ -236,7 +236,7 @@ const Home = () => {
 
             {!getProjectsLoading && projects?.length == 0 &&
               <div className='w-full mt-12 md:mt-24'>
-                <p className='font-semibold text-base text-gray-500 text-center'>You haven't created any projects yet...</p>
+                <p className='font-semibold text-base text-foreground text-center'>You haven't created any projects yet...</p>
                 <div className='w-full h-auto md:w-2/5 mx-auto'>
                   <img alt="desert-cactus" className='w-full aspect-auto' src={cactusgif} />
                 </div>

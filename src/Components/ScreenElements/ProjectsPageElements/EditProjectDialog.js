@@ -80,18 +80,18 @@ const EditProjectDialog = ({ open, closeModal, userId, editData }) => {
 
   return (
     <Dialog open={open} as="div" className="relative z-10 focus:outline-none" onClose={() => { }}>
-      <DialogBackdrop className="fixed inset-0 bg-black/30" />
+      <DialogBackdrop className="fixed inset-0 bg-black/70" />
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel
             transition
-            className="w0full sm:w-96 flex flex-col rounded-lg shadow-xl p-6 border backdrop-blur-2xl bg-white duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+            className="w0full sm:w-96 flex flex-col rounded-lg p-6 border border-primary/30 shadow-lg shadow-primary/40 backdrop-blur-2xl bg-background duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
           >
             <div className='w-full h-9 flex flex-col'>
-              <DialogTitle as="h3" className="text-base/7 font-medium text-gray-950">
+              <DialogTitle as="h3" className="text-base/7 font-medium text-foreground">
                 Edit your project
               </DialogTitle>
-              <button type='button' disabled={editProjectLoading} onClick={closeEditProject} className='absolute w-10 h-6 p1 right-4'>
+              <button type='button' disabled={editProjectLoading} onClick={closeEditProject} className='absolute w-10 h-6 p1 right-4 text-foreground'>
                 <CloseIcon />
               </button>
             </div>
@@ -120,7 +120,7 @@ const EditProjectDialog = ({ open, closeModal, userId, editData }) => {
               />
 
               <div className='relative w-full'>
-                <button disabled={editProjectError || editProjectLoading} className={`relative w-1/2 h-14 mt-8 text-center ml-[25%] rounded ${editProjectError ? 'bg-gray-500' : 'bg-gray-900'} cursor-pointer text-white`} type='submit'>{editProjectLoading ? <CircularProgress size={20} color='#ffffff' /> : 'Edit Project'}</button>
+                <button disabled={editProjectError || editProjectLoading} className={`relative w-1/2 h-14 mt-8 text-center ml-[25%] rounded ${editProjectError ? 'bg-primary/50' : 'bg-primary'} cursor-pointer text-foreground`} type='submit'>{editProjectLoading ? <CircularProgress size={20} color='#ffffff' /> : 'Edit Project'}</button>
               </div>
 
             </form>

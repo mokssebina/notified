@@ -37,7 +37,7 @@ import { submitProjectMessage } from '../../../Pages/Slices/SubmitMessageSlice';
 
 
 
-const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject, messageType, messagePosition, backgroundColor, setBackgroundColor, textColor, setTextColor }) => {
+const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject, messageType, messagePosition, backgroundColor, setBackgroundColor, borderColor, setBorderColor, textColor, setTextColor }) => {
     const { submitMessageResponse, submitMessageLoading, submitMessageError } = useSelector((state) => state.submitmessage);
 
     const { session } = useAuth()
@@ -105,7 +105,7 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
     return (
         <Dialog open={open} as="div" className="relative z-10 focus:outline-none" onClose={() => { }}>
 
-            <DialogBackdrop className="fixed inset-0 bg-black/30" />
+            <DialogBackdrop className="fixed inset-0 bg-black/70" />
 
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
 
@@ -113,16 +113,16 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
 
                     <DialogPanel
                         transition
-                        className="w-full md:w-4/5 lg:w-3/5 flex flex-col rounded-lg shadow-xl p-2 md:p-6 border backdrop-blur-2xl bg-[#fff7ed] duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                        className="w-full md:w-4/5 lg:w-3/5 flex flex-col rounded-lg p-2 md:p-6 border border-primary/30 shadow-lg shadow-primary/40 backdrop-blur-2xl bg-background duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
                     >
 
                         <div className='w-full h-9 flex flex-row'>
 
-                            <DialogTitle as="h3" className="text-base/7 font-medium text-gray-950">
+                            <DialogTitle as="h3" className="text-base/7 font-medium text-foreground">
                                 Create Message
                             </DialogTitle>
 
-                            <button type='button' onClick={close} className='w-9 h-full ml-auto align-middle p-1 cursor-pointer'>
+                            <button type='button' onClick={close} className='w-9 h-full ml-auto align-middle p-1 text-foreground cursor-pointer'>
                                 <CloseIcon />
                             </button>
 
@@ -138,12 +138,12 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
 
                                         <div className='w-full flex flex-row mt-5'>
 
-                                            <p className="text-sm/6 mr-5 text-gray-950">Enable Message:</p>
+                                            <p className="text-sm/6 mr-5 text-foreground">Enable Message:</p>
 
                                             <Switch
                                                 checked={enabled}
                                                 onChange={() => setEnabled(!enabled)}
-                                                className="group inline-flex h-6 w-11 ml-5 items-center rounded-full bg-gray-200 transition data-[checked]:bg-gray-950"
+                                                className="group inline-flex h-6 w-11 ml-5 items-center rounded-full bg-gray-950 transition data-[checked]:bg-primary"
                                             >
                                                 <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-[checked]:translate-x-6" />
                                             </Switch>
@@ -218,20 +218,31 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
 
                                 </div>
 
+                                <div className='relative w-full grid grid-cols-1 sm:grid-cols-2'>
+
+                                    <div className='relative w-full h-full flex flex-row py-1 md:p-3'>
+                                        <ColorInput label={'Border Color'} type={'text'} value={borderColor} color={borderColor} setColor={setBorderColor} onChange={(event) => setBorderColor(event.target.value)} />
+                                    </div>
+
+                                    <div className='relative w-full h-full flex flex-row py-1 md:p-3'>
+                                    </div>
+
+                                </div>
+
                                 <div className='relative w-full p-3'>
 
-                                    <NotificationPreview label={'Preview'} textColor={textColor} backgroundColor={backgroundColor} type={newProjectMessage?.values.messageType} title={newProjectMessage?.values.messageTitle} content={newProjectMessage?.values.messageContent} />
+                                    <NotificationPreview label={'Preview'} textColor={textColor} backgroundColor={backgroundColor} borderColor={borderColor} type={newProjectMessage?.values.messageType} title={newProjectMessage?.values.messageTitle} content={newProjectMessage?.values.messageContent} />
 
                                 </div>
 
                                 <div className='relative w-[296px] h-10 mt-12 mx-auto flex flex-row'>
 
                                     <div className='w-1/2 h-full pr-1'>
-                                        <button type='submit' className={`w-full h-full relative rounded ${true ? 'bg-gray-950' : 'bg-gray-400'} py-2 px-4 text-sm text-white data-[hover]:bg-gray-800`}>{submitMessageLoading ? <CircularProgress size={20} color='#ffffff' /> : 'Create Message'}</button>
+                                        <button type='submit' className={`w-full h-full relative rounded ${true ? 'bg-primary' : 'bg-primary/50'} py-2 px-4 text-sm text-white`}>{submitMessageLoading ? <CircularProgress size={20} color='#ffffff' /> : 'Create Message'}</button>
                                     </div>
 
                                     <div className='w-1/2 h-full pl-1'>
-                                        <button type='reset' className={`w-full h-full relative rounded border border-gray-950 py-2 px-4 text-sm text-gray-950 data-[hover]:bg-gray-800`}>{'Reset'}</button>
+                                        <button type='reset' className={`w-full h-full relative rounded border border-primary py-2 px-4 text-sm text-primary data-[hover]:bg-primary/50`}>{'Reset'}</button>
                                     </div>
 
                                 </div>

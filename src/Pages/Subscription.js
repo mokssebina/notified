@@ -13,9 +13,11 @@ const Subscription = () => {
 
         <div className='w-full mt-12 md:mt-24'>
           <p className='font-semibold text-base text-gray-500 text-center'>We're still working on this section. We'll have it up and running soon...</p>
+          {/*
           <div className='w-full h-auto md:w-2/5 mx-auto'>
             <img alt="desert-cactus" className='w-full aspect-auto' src={cactusgif} />
           </div>
+          */}
         </div>
 
       </div>

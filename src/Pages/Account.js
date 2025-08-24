@@ -89,15 +89,15 @@ const Account = () => {
 
         <PageHeader title={'Account'} />
 
-        <div className='w-full flex flex-col p-2 mt-10 border border-gray-950 rounded-lg'>
+        <div className='w-full flex flex-col p-2 mt-10 border border-foreground rounded-lg'>
 
           <div className='w-full px-2'>
 
-            <div className='w-full flex flex-row py-3 border-b border-gray-950'>
+            <div className='w-full flex flex-row py-3 border-b border-foreground'>
 
-              <p className='font-semibold text-base my-2 md:text-lg'>Personal Information</p>
+              <p className='font-semibold text-base text-foreground my-2 md:text-lg'>Personal Information</p>
 
-              <button onClick={() => setEdit(!edit)} className='relative h-12 py-3 px-3 ml-auto rounded border border-slate-950 text-slate-950 align-middle'>
+              <button onClick={() => setEdit(!edit)} className='relative h-12 py-3 px-3 ml-auto rounded border border-primary text-primary align-middle'>
                 <div className='flex flex-row space-x-2 align-middle'>
                   {edit ?
                     <>
@@ -200,7 +200,7 @@ const Account = () => {
             {!edit &&
               <div className='w-full flex flex-row'>
 
-                <button type='submit' className='relative h-12 px-4 ml-auto rounded-lg border bg-slate-950 text-white align-middle'>
+                <button type='submit' className='relative h-12 px-4 ml-auto rounded-lg border border-foreground bg-primary text-foreground align-middle'>
                   {'Update Details'}
                 </button>
 

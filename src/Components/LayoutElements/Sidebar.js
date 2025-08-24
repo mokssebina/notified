@@ -20,7 +20,7 @@ import { navRoutes } from './appRoutes'
 import { useAuth } from '../../Context/AuthContext'
 
 //////////////---Image imports---////////////////////
-import logoImage from '../../Assets/images/notified-02.png'
+import logoImage from '../../Assets/images/notified_logo-02.png'
 
 
 const Sidebar = () => {
@@ -40,7 +40,7 @@ const Sidebar = () => {
             //transition={{ type: "spring", stiffness: 80 }}
             className={`relative w-1/5 h-full p-5`}
         >
-            <div className='w-full h-full rounded-[16px] p-2 bg-slate-950 border-2 flex flex-col space-y-1'>
+            <div className='w-full h-full rounded-[16px] p-2 bg-background border-2 border-primary flex flex-col space-y-1'>
 
                 <div className='relative top-0 w-full h-16 pt-4 flex flex-row mb-8'>
 

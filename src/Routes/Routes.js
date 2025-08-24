@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 import LandingPage from '../LandingPage/Home'
+import DocsPage from '../LandingPage/DocsPage'
 import Home from '../Pages/Home'
 import Notifications from '../Pages/Notifications'
 import Subscription from '../Pages/Subscription'
 import Account from '../Pages/Account'
+import Documentation from '../Pages/Documentation'
 import { PrivateRoutes } from './PrivateRoutes'
 import { PublicRoutes } from './PublicRoutes'
 import Signin from '../AuthPages/Signin'
@@ -39,8 +41,9 @@ const AppRoutes = () => {
       {/*------------------Public Routes------------------*/}
       <Route path={'/'} element={<PublicRoutes authUser={session?.user} />}>
 
-        <Route index path={'/'} element={<Navigate to='/signin' />} />
-        {/*<Route index element={<LandingPage />} />*/}
+        {/*<Route index path={'/'} element={<Navigate to='/' />} />*/}
+        <Route index element={<LandingPage />} />
+        <Route path={'/docs'} element={<DocsPage />} />
         <Route path={'/signin'} element={<Signin />} />
         <Route path={'/signup'} element={<Signup />} />
 
@@ -49,11 +52,12 @@ const AppRoutes = () => {
       {/*------------------Private Routes------------------*/}
       <Route path={'/'} element={<PrivateRoutes authUser={session?.user} />}>
 
-        <Route index path={'/'} element={<Navigate to='/projects' />} />
+        <Route index element={<Navigate to='/projects' />} />
         <Route path={'/projects'} element={<Home />} />
         <Route path={'/messages'} element={<Notifications />} />
         <Route path={'/subscriptions'} element={<Subscription />} />
         <Route path={'/account'} element={<Account />} />
+        <Route path={'/documentation'} element={<Documentation />} />
 
       </Route>
 

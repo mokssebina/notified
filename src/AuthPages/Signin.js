@@ -36,7 +36,7 @@ import { signInUser, resetSigninUser } from '../Pages/Slices/SignInSlice';
 import { signUpUserOauth, resetSignUpUserOauth } from './SignupSlice/SignUpOauthSlice';
 
 //////////////---Image imports---////////////////////
-import logoImage from '../Assets/images/notified-01.png'
+import logoImage from '../Assets/images/notified_logo-02.png'
 
 
 
@@ -80,6 +80,10 @@ const Signin = () => {
         dispatch(signUpUserOauth())
     }
 
+    const goHome = () => {
+        navigate('/')
+    }
+
     useEffect(() => {
         if (signinErrorMessage) {
             toast.error(signinErrorMessage)
@@ -88,11 +92,11 @@ const Signin = () => {
     }, [signinErrorMessage])
 
     return (
-        <div className='w-screen h-screen flex flex-col bg-[#fff7ed] p-2'>
+        <div className='w-screen h-screen flex flex-col bg-background p-2'>
 
-            <form onSubmit={authFormik.handleSubmit} className='relative w-full md:w-[350px] lg:w-[500px] flex flex-col m-auto py-16 px-4 lg:px-[90px] space-y-3 border border-gray-950 rounded-lg'>
+            <form onSubmit={authFormik.handleSubmit} className='relative w-full md:w-[350px] lg:w-[500px] flex flex-col m-auto py-16 px-4 lg:px-[90px] space-y-3 border border-primary/30 shadow-lg shadow-primary/40 rounded-lg'>
 
-                <div className='w-48 h-16 mx-auto mb-9'>
+                <div onClick={goHome} className='w-48 h-16 mx-auto mb-9 cursor-pointer'>
                     <img className='w-full aspect-auto' alt='logo-image' src={logoImage} />
                 </div>
 
@@ -102,16 +106,16 @@ const Signin = () => {
 
                 <div className='w-full h-5 mt-3 mb-3 flex flex-row space-x-4'>
                     <input disabled={!authFormik?.values.password} className='w-5 h-5' type='checkbox' checked={show} onChange={handleChange} />
-                    <p className='text-sm font-semibold ml-3'>Show password</p>
+                    <p className='text-sm font-semibold text-foreground ml-3'>Show password</p>
                 </div>
 
-                <button type='submit' className="w-full sm:w-80 h-12 mx-auto rounded-lg bg-gray-950 py-2 px-4 text-sm mt-14 text-white data-[hover]:bg-gray-800">
+                <button type='submit' className="w-full sm:w-80 h-12 mx-auto rounded-lg bg-primary py-2 px-4 text-sm mt-14 text-white">
                     {signinLoader ? <CircularProgress size={20} color='#ffffff' /> : 'Continue →'}
                 </button>
 
                 <div className='w-full flex flex-row mt-4'>
-                    <p className='text-sm mr-1'>Don't have an account?</p>
-                    <p onClick={() => navigate('/signup')} className='text-sm text-blue-700 hover:underline cursor-pointer'>Signup here.</p>
+                    <p className='text-sm text-foreground mr-1'>Don't have an account?</p>
+                    <p onClick={() => navigate('/signup')} className='text-sm text-primary hover:underline cursor-pointer'>Signup here.</p>
                 </div>
 
                {/*

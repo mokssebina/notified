@@ -79,7 +79,7 @@ const Layout = ({ children }) => {
 
     return (
 
-        <div className={`w-screen h-screen ${device === 'Desktop' && 'flex flex-row'} bg-[#fff7ed] overscroll-none`}>
+        <div className={`w-screen h-screen ${device === 'Desktop' && 'flex flex-row'} bg-background overscroll-none`}>
 
             {/*panel &&
                 <>
@@ -104,7 +104,7 @@ const Layout = ({ children }) => {
                             animate="open"
                             exit="closed"
                             variants={overlayVariants}
-                            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+                            className="fixed inset-0 bg-background bg-opacity-50 z-40"
                         />
                     </>
                 }
@@ -118,11 +118,11 @@ const Layout = ({ children }) => {
 
                 <div className={`${preview ? 'w-full h-full' : 'w-full h-content px-2 pb-1 overflow-auto'}`}>{children}</div>
 
-                {preview &&
+                {/*preview &&
                     <button onClick={() => togglePreview()} type='submit' className="fixed right-8 bottom-8 w-32 h-12 rounded shadow-md border border-white bg-gray-950 py-2 px-4 text-sm mt-14 z-10 text-white data-[hover]:bg-gray-800">
                         ← Back
                     </button>
-                }
+                */}
             </main>
 
         </div>

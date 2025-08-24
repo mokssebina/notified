@@ -62,8 +62,9 @@ const Notifications = () => {
     const [newMessage, setNewMessage] = useState(false)
     const [editMessage, setEditMessage] = useState(false)
     const [editMessageItem, setEditMessageItem] = useState(null)
-    const [backgroundColor, setBackgroundColor] = useState('#ffffff')
-    const [textColor, setTextColor] = useState('#000000')
+    const [backgroundColor, setBackgroundColor] = useState('#14161a')
+    const [textColor, setTextColor] = useState('#fafafa')
+    const [borderColor, setBorderColor] = useState('#f97015')
     const [messageDelete, setMessageDelete] = useState(false)
     const [messageId, setMessageId] = useState('')
 
@@ -129,8 +130,9 @@ const Notifications = () => {
         setSelectedId('')
         setSelectedProject(null)
         setEditMessageItem(null)
-        setBackgroundColor('#ffffff')
-        setTextColor('#000000')
+        setBackgroundColor('#14161a')
+        setTextColor('#fafafa')
+        setBorderColor('#f97015')
         dispatch(resetGetProjectMessages())
     }
 
@@ -235,6 +237,8 @@ const Notifications = () => {
                 messagePosition={messagePosition}
                 backgroundColor={backgroundColor}
                 setBackgroundColor={setBackgroundColor}
+                borderColor={borderColor}
+                setBorderColor={setBorderColor}
                 textColor={textColor}
                 setTextColor={setTextColor}
             />
@@ -249,6 +253,8 @@ const Notifications = () => {
                 messagePosition={messagePosition}
                 backgroundColor={backgroundColor}
                 setBackgroundColor={setBackgroundColor}
+                borderColor={borderColor}
+                setBorderColor={setBorderColor}
                 textColor={textColor}
                 setTextColor={setTextColor}
             />
@@ -281,7 +287,7 @@ const Notifications = () => {
                     <div className={`w-full md:w-1/2 flex flex-row`}>
 
                         <Tooltip title={!selectedProject && "Select a project to create a notification."}>
-                            <button disabled={!selectedProject} onClick={createNewMessage} className={`w-40 h-12 md:ml-auto px-3 mt-4 md:mt-6 rounded-lg border ${!selectedProject ? 'bg-slate-500' : 'bg-slate-950'} text-white align-middle`}>
+                            <button disabled={!selectedProject} onClick={createNewMessage} className={`w-40 h-12 md:ml-auto px-3 mt-4 md:mt-6 rounded-lg border border-foreground ${!selectedProject ? 'bg-primary/50' : 'bg-primary'} text-foreground align-middle`}>
                                 <div className='flex flex-row space-x-2 align-middle'>
                                     <Add />
                                     <p>Create New</p>

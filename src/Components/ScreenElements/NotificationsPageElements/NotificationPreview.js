@@ -3,14 +3,39 @@ import { InformationCircleIcon, ExclamationTriangleIcon, XCircleIcon } from '@he
 
 
 
-const NotificationPreview = ({ label, textColor, backgroundColor, type, title, content }) => {
+const NotificationPreview = ({ label, textColor, backgroundColor, borderColor, type, title, content }) => {
+
+    function hexToRgba(hex, alpha) {
+        // Remove leading #
+        hex = hex.replace(/^#/, "");
+
+        // Expand shorthand form (#03F → #0033FF)
+        if (hex.length === 3) {
+            hex = hex.split("").map(x => x + x).join("");
+        }
+
+        // Parse into r, g, b
+        const bigint = parseInt(hex, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
     return (
         <>
-            <p className='text-gray-950 text-sm/6 mb-3'>{label}</p>
+            <p className='text-foreground text-sm/6 mb-3'>{label}</p>
 
-            <div className='w-full p-3 bg-slate-300 border border-gray-900 rounded-lg'>
+            <div className='w-full px-3 py-4 bg-muted rounded-lg'>
 
-                <div style={{ borderColor: `${textColor}`, backgroundColor: `${backgroundColor}` }} className={`w-full md:w-[400px] mx-auto flex flex-col border-2 rounded-lg py-2 px-3`}>
+                <div style={{
+                    backgroundColor: `${backgroundColor}`,
+                    borderWidth: "1px",
+                    borderColor: `${hexToRgba(borderColor, 0.3)}`,
+                    boxShadow: `0 10px 15px -3px ${hexToRgba(borderColor, 0.4)}, 0 4px 6px -4px ${hexToRgba(borderColor, 0.4)}`
+                }}
+                    className={`w-full md:w-[400px] mx-auto flex flex-col rounded-lg py-2 px-3`}>
 
                     <div className='w-full flex flex-row'>
 

@@ -1,4 +1,4 @@
-import { HomeIcon, ListBulletIcon, UserIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, ListBulletIcon, UserIcon, ChatBubbleLeftIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
 
 
 export const navRoutes = [
@@ -25,5 +25,11 @@ export const navRoutes = [
         path: '/account',
         title: 'Account',
         icon: <UserIcon fontSize={24} />
+    },
+    {
+        id: '5',
+        path: '/documentation',
+        title: 'Documentation',
+        icon: <DocumentTextIcon fontSize={24} />
     }
 ]

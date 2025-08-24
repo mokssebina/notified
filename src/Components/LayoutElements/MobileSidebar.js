@@ -20,7 +20,7 @@ import { navRoutes } from './appRoutes'
 import { useAuth } from '../../Context/AuthContext'
 
 //////////////---Image imports---////////////////////
-import logoImage from '../../Assets/images/notified-02.png'
+import logoImage from '../../Assets/images/notified_logo-02.png'
 
 
 const MobileSidebar = ({ closeSideNav }) => {
@@ -67,7 +67,7 @@ const MobileSidebar = ({ closeSideNav }) => {
                 //transition={{ type: "spring", stiffness: 80 }}
                 className={`absolute w-11/12 md:w-1/3 h-full p-5 z-50`}
             >
-                <div className='w-full h-full rounded-lg p-2 bg-slate-950 border-2 flex flex-col space-y-1'>
+                <div className='w-full h-full rounded-lg p-2 bg-background border-2 border-primary flex flex-col space-y-1'>
 
                     <div className='relative top-0 w-full h-16 flex flex-row mb-8'>
 
