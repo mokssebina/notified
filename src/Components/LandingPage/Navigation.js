@@ -67,7 +67,7 @@ const Navigation = ({goHome, goToSignin, goToSignup, goToDocs}) => {
                             <a href="#pricing" className="block text-muted-foreground hover:text-foreground transition-colors">
                                 Pricing
                             </a>
-                            <a href="#docs" className="block text-muted-foreground hover:text-foreground transition-colors">
+                            <a onClick={goToDocs} className="block text-muted-foreground hover:text-foreground transition-colors">
                                 Docs
                             </a>
                             <a href="#company" className="block text-muted-foreground hover:text-foreground transition-colors">

@@ -70,7 +70,7 @@ const ToggleDemo = ({ messageType, handleMessageType, messageTitle, handleTitle,
 
             {/* Messages Demo */}
             <div className="space-y-4 flex flex-col">
-                <div className="w-full flex flex-row">
+                <div className="w-full flex flex-col md:flex-row">
                     <div className="w-full md:w-1/2 px-1">
                         <SelectInput
                             name={''}
@@ -99,8 +99,6 @@ const ToggleDemo = ({ messageType, handleMessageType, messageTitle, handleTitle,
                 <div className="w-full flex flex-row">
                     <div className="w-full md:w-1/2 px-1">
                         <SimpleInput label={'Message Title'} type={'text'} placeholder={'Insert message title'} name={''} value={messageTitle} onChange={handleTitle} />
-                    </div>
-                    <div className="w-full md:w-1/2 px-1">
                     </div>
                 </div>
                 <div className="w-full flex">

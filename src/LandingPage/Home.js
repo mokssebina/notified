@@ -67,7 +67,7 @@ const LandingPage = () => {
 
     return (
         <>
-            <div className='w-screen h-screen flex flex-col bg-background p-3 overscroll-none'>
+            <div className='w-screen h-full md:h-screen flex flex-col bg-background p-3 overscroll-none'>
 
                 <Navigation
                     goHome={goHome}

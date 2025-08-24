@@ -58,7 +58,7 @@ const HeroSection = ({messageType, handleMessageType, messageTitle, handleTitle,
 
                     {/* Right Column - Interactive Toggle Demo */}
                     <div 
-                    className="relative flex items-center justify-center bg-gradient-radial from-primary/40 via-primary/0 to-primary/0"
+                    className={`relative flex items-center justify-center ${isEnabled? 'bg-gradient-radial from-primary/40 via-primary/0 to-primary/0' : ''}`}
                     >
                         <ToggleDemo 
                             messageType={messageType} 
