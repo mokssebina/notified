@@ -7,11 +7,11 @@ const Navigation = ({goHome, goToSignin, goToSignup, goToDocs}) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <nav className="relative z-50 py-1 border-b border-border/50 bg-background/80 backdrop-blur-sm cursor-pointer">
+        <nav className="relative z-50 py-1 border-b border-border/50 bg-background/80 backdrop-blur-sm">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <div onClick={goHome} className="h-16 flex items-center space-x-3">
+                    <div onClick={goHome} className="h-16 flex items-center space-x-3 cursor-pointer">
                         <img
                             src={notifiedLogo}
                             alt="notified"
@@ -45,7 +45,7 @@ const Navigation = ({goHome, goToSignin, goToSignup, goToDocs}) => {
                     {/* Mobile menu button */}
                     <div className="md:hidden">
                         <button
-                            className="w-12 h-12 rounded-lg border border-primary px-3 justify-center text-sm text-white"
+                            className="w-12 h-12 rounded-lg border border-primary px-3 justify-center text-sm text-foreground cursor-pointer"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                         >
                             {isMenuOpen ? (
@@ -74,10 +74,10 @@ const Navigation = ({goHome, goToSignin, goToSignup, goToDocs}) => {
                                 Company
                             </a>
                             <div className="flex flex-col space-y-2 pt-4">
-                                <button className="h-12 rounded-lg border border-primary py-2 px-4 justify-center text-sm mt-14 text-primary data-[hover]:bg-gray-800">
+                                <button className="h-12 rounded-lg border border-primary py-2 px-4 justify-center text-sm mt-14 text-primary data-[hover]:bg-gray-800 cursor-pointer">
                                     {'Sign In'}
                                 </button>
-                                <button className="h-12 rounded-lg bg-primary py-2 px-4 justify-center text-sm mt-14 text-white data-[hover]:bg-gray-800">
+                                <button className="h-12 rounded-lg bg-primary py-2 px-4 justify-center text-sm mt-14 text-white data-[hover]:bg-gray-800 cursor-pointer">
                                     {'Get Started →'}
                                 </button>
                             </div>
