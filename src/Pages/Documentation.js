@@ -42,11 +42,11 @@ const Documentation = () => {
                         <SnippetTabs />
                     </div>
 
-                    <p className="mt-4 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
+                    <p className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
                         2. Sign in to the dashboard, create a project and copy the project key.
                     </p>
 
-                    <p className="mt-4 mb-16 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
+                    <p className="mt-6 mb-20 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
                         3. Paste project key into the component in your code and you good to go!!!
                     </p>
 
