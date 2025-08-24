@@ -59,7 +59,7 @@ const UpdateNotification = ({ open, close, enabled, setEnabled, editMessageItem,
             position: editMessageItem?.position,
             backgroundColor: backgroundColor,
             textColor: textColor,
-            borderColor: textColor,
+            borderColor: borderColor,
         },
         onReset: () => {
             //resetForm()
@@ -76,7 +76,7 @@ const UpdateNotification = ({ open, close, enabled, setEnabled, editMessageItem,
                 position: values?.position,
                 backgroundColor: backgroundColor,
                 textColor: textColor,
-                borderColor: textColor,
+                borderColor: borderColor,
                 id: editMessageItem?.id
             }
             console.log("update values: ", data)

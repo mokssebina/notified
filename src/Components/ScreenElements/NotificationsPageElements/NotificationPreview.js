@@ -1,6 +1,8 @@
 import React from 'react'
 import { InformationCircleIcon, ExclamationTriangleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 
+/////////////---Icon imports---////////////////////
+import { AlertTriangle, CheckCircle, CircleX, Info } from "lucide-react";
 
 
 const NotificationPreview = ({ label, textColor, backgroundColor, borderColor, type, title, content }) => {
@@ -38,10 +40,9 @@ const NotificationPreview = ({ label, textColor, backgroundColor, borderColor, t
                     className={`w-full md:w-[400px] mx-auto flex flex-col rounded-lg py-2 px-3`}>
 
                     <div className='w-full flex flex-row'>
-
-                        {type === 'Information' && <p className='text-lg' style={{ fontSize: '1.125rem' }}>ℹ</p>}
-                        {type === 'Warning' && <p className='text-lg' style={{ fontSize: '1.125rem' }}>⚠️</p>}
-                        {type === 'Error' && <p className='text-lg' style={{ fontSize: '1.125rem' }}>‼️</p>}
+                        {type === 'Information' && <Info size={16} className='text-blue-500' />}
+                        {type === 'Warning' && <AlertTriangle size={16} className='text-amber-500' />}
+                        {type === 'Error' && <CircleX size={16} className='text-red-500' />}
                         <p style={{ color: `${textColor}` }} className={`text-base font-semibold ml-3`}>{title}</p>
                     </div>
 

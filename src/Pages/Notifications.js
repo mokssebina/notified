@@ -115,6 +115,7 @@ const Notifications = () => {
         setEnabled(value?.is_active)
         setBackgroundColor(value?.backgroundColor)
         setTextColor(value?.textColor)
+        setBorderColor(value?.borderColor)
     }
 
     const closeCreate = () => {
