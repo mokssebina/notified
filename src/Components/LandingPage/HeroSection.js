@@ -68,7 +68,7 @@ const HeroSection = ({ messageType, handleMessageType, messageTitle, handleTitle
                         className={`relative flex flex-col items-center justify-center ${isEnabled ? 'bg-gradient-radial from-primary/40 via-primary/0 to-primary/0' : ''}`}
                     >
                         <h3 className="text-lg sm:text-xl font-bold text-foreground leading-tight mb-8">
-                            Give it a try, to get a feel of how it works!
+                            Click on the switch below, to get a feel of how it works!
                         </h3>
                         <ToggleDemo
                             messageType={messageType}
