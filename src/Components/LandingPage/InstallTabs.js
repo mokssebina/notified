@@ -51,7 +51,7 @@ export default function InstallTabs() {
             </div>
 
             {/* Code block */}
-            <div className="bg-muted text-foreground rounded-xl mt-4 p-4 flex flex-row font-mono text-sm">
+            <div className="bg-muted text-foreground rounded-xl mt-4 p-4 flex flex-row font-mono text-sm border border-primary/30 shadow-lg shadow-primary/40">
                 <code>{installCommands[activeTab]}</code>
                 <Tooltip title='Copy' className='hidden md:block'>
                     <ClipboardDocumentIcon onClick={copyText} className={clsx('hidden md:block w-5 cursor-pointer ml-auto')} />
