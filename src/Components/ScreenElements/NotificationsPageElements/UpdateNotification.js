@@ -204,7 +204,7 @@ const UpdateNotification = ({ open, close, enabled, setEnabled, editMessageItem,
                                 <div className='relative w-full grid grid-cols-1 sm:grid-cols-2'>
 
                                     <div className='relative w-full h-full flex flex-row py-1 md:p-3'>
-                                        <ColorInput label={'Border Color'} type={'text'} value={borderColor} color={borderColor} setColor={setBorderColor} onChange={(event) => setBorderColor(event.target.value)} />
+                                        <ColorInput label={'Shadow Color'} type={'text'} value={borderColor} color={borderColor} setColor={setBorderColor} onChange={(event) => setBorderColor(event.target.value)} />
                                     </div>
 
                                     <div className='relative w-full h-full flex flex-row py-1 md:p-3'>

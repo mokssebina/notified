@@ -1,6 +1,6 @@
 import ToggleDemo from "./ToggleDemo";
 
-const HeroSection = ({messageType, handleMessageType, messageTitle, handleTitle, position, handlePosition, content, handleContent, goToSignup, isEnabled, setIsEnabled}) => {
+const HeroSection = ({ messageType, handleMessageType, messageTitle, handleTitle, position, handlePosition, content, handleContent, goToSignup, isEnabled, setIsEnabled, backgroundColor, setBackgroundColor, borderColor, setBorderColor, textColor, setTextColor }) => {
     return (
         <section className="relative min-h-screen flex items-center bg-gradient-subtle overflow-hidden pt-8 sm:pt-0">
             {/* Background decoration */}
@@ -12,29 +12,36 @@ const HeroSection = ({messageType, handleMessageType, messageTitle, handleTitle,
                     {/* Left Column - Content */}
                     <div className="space-y-8">
                         {/* Badge */}
+                        {/*
                         <div className="inline-flex items-center space-x-2 bg-card/50 border border-border/50 rounded-full px-4 py-2 backdrop-blur-sm mt-6">
                             <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-                            <span className="text-sm text-muted-foreground">Real-time Status Communication</span>
+                            <span className="text-sm text-muted-foreground">Real-Time Route-Specific Messaging SDK</span>
                         </div>
-
+                        */}
                         {/* Headline */}
                         <div className="space-y-4">
                             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                                Route-Specific Status
+                                Real-Time Route-Specific Messaging SDK
                                 <br />
+                                {/*
                                 <span className="text-transparent bg-gradient-primary bg-clip-text">
-                                    Messages in Real-Time
+                                    
                                 </span>
+                                */}
                             </h1>
                             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-                                Plug-and-play SDK for React & Next.js. Show contextual messages scoped to exact routes—no backend required. Just add a few lines of code and start communicating instantly.
+                                Plug-and-play SDK for React & Next.js. 
+                                <br />
+                                Engage your users with dynamic, targeted in-app messages that update instantly. 
+                                <br />
+                                Just add a few lines of code and start communicating.
                             </p>
                         </div>
 
                         {/* CTAs */}
                         <div className="flex flex-col sm:flex-row gap-4">
                             <button onClick={goToSignup} className="h-12 rounded-lg bg-primary py-2 px-4 justify-center text-sm mt-14 text-white data-[hover]:bg-gray-800">
-                                {'Get Started'}
+                                {'Get Started →'}
                             </button>
                         </div>
 
@@ -57,20 +64,29 @@ const HeroSection = ({messageType, handleMessageType, messageTitle, handleTitle,
                     </div>
 
                     {/* Right Column - Interactive Toggle Demo */}
-                    <div 
-                    className={`relative flex items-center justify-center ${isEnabled? 'bg-gradient-radial from-primary/40 via-primary/0 to-primary/0' : ''}`}
+                    <div
+                        className={`relative flex flex-col items-center justify-center ${isEnabled ? 'bg-gradient-radial from-primary/40 via-primary/0 to-primary/0' : ''}`}
                     >
-                        <ToggleDemo 
-                            messageType={messageType} 
-                            handleMessageType={handleMessageType} 
-                            messageTitle={messageTitle} 
-                            handleTitle={handleTitle} 
-                            position={position} 
-                            handlePosition={handlePosition} 
-                            content={content} 
+                        <h3 className="text-lg sm:text-xl font-bold text-foreground leading-tight mb-8">
+                            Give it a try, to get a feel of how it works!
+                        </h3>
+                        <ToggleDemo
+                            messageType={messageType}
+                            handleMessageType={handleMessageType}
+                            messageTitle={messageTitle}
+                            handleTitle={handleTitle}
+                            position={position}
+                            handlePosition={handlePosition}
+                            content={content}
                             handleContent={handleContent}
-                            isEnabled={isEnabled} 
+                            isEnabled={isEnabled}
                             setIsEnabled={setIsEnabled}
+                            backgroundColor={backgroundColor} 
+                            setBackgroundColor={setBackgroundColor} 
+                            borderColor={borderColor} 
+                            setBorderColor={setBorderColor} 
+                            textColor={textColor} 
+                            setTextColor={setTextColor}
                         />
                     </div>
                 </div>

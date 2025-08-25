@@ -109,66 +109,64 @@ const Signup = () => {
 
 
     return (
-        <div className='w-screen h-screen flex flex-col bg-background'>
+        <div className='w-screen h-screen flex flex-col bg-background p-2'>
 
-            <div className='relative w-full md:w-[350px] lg:w-[500px] m-auto py-16 px-[90px] space-y-3 border border-primary/30 shadow-lg shadow-primary/40 rounded-lg'>
+            <form onSubmit={authSignipFormik.handleSubmit} className='relative w-full md:w-[350px] lg:w-[500px] flex flex-col m-auto py-16 px-4 lg:px-[90px] space-y-3 border border-primary/30 shadow-lg shadow-primary/40 rounded-lg'>
 
-                <form onSubmit={authSignipFormik.handleSubmit} className='w-full flex flex-col'>
+                <div onClick={goHome} className='w-48 h-16 mx-auto mb-9 cursor-pointer'>
+                    <img className='w-full aspect-auto' alt='logo-image' src={logoImage} />
+                </div>
 
-                    <div onClick={goHome} className='w-48 h-16 mx-auto mb-9 cursor-pointer'>
-                        <img className='w-full aspect-auto' alt='logo-image' src={logoImage} />
-                    </div>
+                <AuthInput
+                    label={'Email'}
+                    type={'email'}
+                    placeholder={'Enter your email'}
+                    name={'email'}
+                    value={authSignipFormik?.values.email}
+                    onChange={authSignipFormik?.handleChange('email')}
+                    touched={authSignipFormik?.touched.email}
+                    error={(authSignipFormik.touched.email && authSignipFormik.errors.email) && authSignipFormik.errors.email}
+                />
 
-                    <AuthInput
-                        label={'Email'}
-                        type={'email'}
-                        placeholder={'Enter your email'}
-                        name={'email'}
-                        value={authSignipFormik?.values.email}
-                        onChange={authSignipFormik?.handleChange('email')}
-                        touched={authSignipFormik?.touched.email}
-                        error={(authSignipFormik.touched.email && authSignipFormik.errors.email) && authSignipFormik.errors.email}
-                    />
+                {password &&
+                    <>
+                        <AuthInput
+                            label={'Password'}
+                            type={show ? 'text' : 'password'}
+                            placeholder={'Enter your password'}
+                            name={'password'}
+                            value={authSignipFormik?.values.password}
+                            onChange={authSignipFormik?.handleChange('password')}
+                            touched={authSignipFormik?.touched.password}
+                            error={(authSignipFormik.touched.password && authSignipFormik.errors.password) && authSignipFormik.errors.password}
+                        />
 
-                    {password &&
-                        <>
-                            <AuthInput
-                                label={'Password'}
-                                type={show ? 'text' : 'password'}
-                                placeholder={'Enter your password'}
-                                name={'password'}
-                                value={authSignipFormik?.values.password}
-                                onChange={authSignipFormik?.handleChange('password')}
-                                touched={authSignipFormik?.touched.password}
-                                error={(authSignipFormik.touched.password && authSignipFormik.errors.password) && authSignipFormik.errors.password}
-                            />
+                        <div className='w-full h-5 mt-3 mb-3 flex flex-row space-x-4'>
+                            <input disabled={!authSignipFormik?.values.password} className='w-5 h-5' type='checkbox' checked={show} onChange={handleChange} />
+                            <p className='text-sm font-semibold text-foreground ml-3'>Show password</p>
+                        </div>
+                    </>
+                }
 
-                            <div className='w-full h-5 mt-3 mb-3 flex flex-row space-x-4'>
-                                <input disabled={!authSignipFormik?.values.password} className='w-5 h-5' type='checkbox' checked={show} onChange={handleChange} />
-                                <p className='text-sm font-semibold text-foreground ml-3'>Show password</p>
-                            </div>
-                        </>
-                    }
+                {!password &&
+                    <button type='button' onClick={continueSignUp} disabled={!authSignipFormik?.values.email} className="relative w-full sm:w-80 h-12 mx-auto rounded-lg bg-primary py-2 px-4 text-sm mt-8 text-white cursor-pointer">
+                        {'Continue →'}
+                    </button>
+                }
 
-                    {!password &&
-                        <button type='button' onClick={continueSignUp} disabled={!authSignipFormik?.values.email} className="relative w-full sm:w-80 h-12 mx-auto rounded-lg bg-primary py-2 px-4 text-sm mt-8 text-white cursor-pointer">
-                            {'Continue →'}
-                        </button>
-                    }
+                {password &&
+                    <button type='submit' className="relative w-full sm:w-80 h-12 mx-auto rounded-lg bg-primary py-2 px-4 text-sm mt-8 text-white">
+                        {signUpLoader ? <CircularProgress size={20} color='#ffffff' /> : 'Sign up'}
+                    </button>
+                }
 
-                    {password &&
-                        <button type='submit' className="relative w-full sm:w-80 h-12 mx-auto rounded-lg bg-primary py-2 px-4 text-sm mt-8 text-white">
-                            {signUpLoader ? <CircularProgress size={20} color='#ffffff' /> : 'Sign up'}
-                        </button>
-                    }
+                <div className='w-full flex flex-row mt-4'>
+                    <p className='text-sm text-foreground mr-1'>Already have an account?</p>
+                    <p onClick={() => navigate('/signin')} className='text-sm text-primary hover:underline cursor-pointer'>Signin here.</p>
+                </div>
 
-                    <div className='w-full flex flex-row mt-4'>
-                        <p className='text-sm text-foreground mr-1'>Already have an account?</p>
-                        <p onClick={() => navigate('/signin')} className='text-sm text-primary hover:underline cursor-pointer'>Signin here.</p>
-                    </div>
-
-                </form>
-                {/*
+            </form>
+            {/*
                 <div className='w-auto flex flex-row items-center my-12'>
                     <div className='w-2/5 h-6'>
                         <div className='h-3 border-b border-slate-400'></div>
@@ -187,7 +185,6 @@ const Signup = () => {
                     </div>
                 </button>
                 */}
-            </div>
 
         </div>
     )

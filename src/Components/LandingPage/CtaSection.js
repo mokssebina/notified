@@ -7,7 +7,7 @@ const CtaSection = ({goToSignup}) => {
     ];
 
     return (
-        <section className="py-24 bg-gradient-subtle relative overflow-hidden">
+        <section className="w-full py-24 bg-gradient-subtle relative">
             {/* Background decoration */}
             <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-primary rounded-full blur-3xl opacity-10"></div>

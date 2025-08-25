@@ -8,9 +8,10 @@ import { Switch } from '@headlessui/react'
 import SelectInput from "../Inputs/SelectInput";
 import SimpleInput from "../Inputs/SimpleInput";
 import TextAreaInput from "../Inputs/TextAreaInput";
+import ColorInput from "../Inputs/ColorInput";
 
 
-const ToggleDemo = ({ messageType, handleMessageType, messageTitle, handleTitle, position, handlePosition, content, handleContent, isEnabled, setIsEnabled }) => {
+const ToggleDemo = ({ messageType, handleMessageType, messageTitle, handleTitle, position, handlePosition, content, handleContent, isEnabled, setIsEnabled, backgroundColor, setBackgroundColor, borderColor, setBorderColor, textColor, setTextColor }) => {
 
     const messages = [
         {
@@ -49,7 +50,7 @@ const ToggleDemo = ({ messageType, handleMessageType, messageTitle, handleTitle,
     return (
         <div className="w-full md:w-4/5 lg:max-w-4xl mx-auto">
             {/* Toggle Control */}
-            <div className="flex items-center justify-center space-x-4 mb-8">
+            <div className="flex items-center space-x-4 mb-8">
 
                 <span className={`text-sm font-medium transition-colors ${!isEnabled ? 'text-foreground' : 'text-muted-foreground'}`}>
                     Message Off
@@ -58,7 +59,7 @@ const ToggleDemo = ({ messageType, handleMessageType, messageTitle, handleTitle,
                 <Switch
                     checked={isEnabled}
                     onChange={setIsEnabled}
-                    className="group inline-flex h-6 w-11 ml-5 items-center rounded-full bg-gray-950 transition data-[checked]:bg-primary"
+                    className="group inline-flex h-6 w-11 ml-5 items-center rounded-full bg-gray-950 border border-foreground transition data-[checked]:bg-primary"
                 >
                     <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-[checked]:translate-x-6" />
                 </Switch>
@@ -100,6 +101,17 @@ const ToggleDemo = ({ messageType, handleMessageType, messageTitle, handleTitle,
                     <div className="w-full md:w-1/2 px-1">
                         <SimpleInput label={'Message Title'} type={'text'} placeholder={'Insert message title'} name={''} value={messageTitle} onChange={handleTitle} />
                     </div>
+                    <div className="w-full md:w-1/2 px-1">
+                        <ColorInput label={'Background Color'} type={'text'} value={backgroundColor} color={backgroundColor} setColor={setBackgroundColor} onChange={(event) => setBackgroundColor(event.target.value)} />
+                    </div>
+                </div>
+                <div className="w-full flex flex-row">
+                    <div className="w-full md:w-1/2 px-1">
+                        <ColorInput label={'Text Color'} type={'text'} value={textColor} color={textColor} setColor={setTextColor} onChange={(event) => setTextColor(event.target.value)} />
+                    </div>
+                    <div className="w-full md:w-1/2 px-1">
+                        <ColorInput label={'Shadow Color'} type={'text'} value={borderColor} color={borderColor} setColor={setBorderColor} onChange={(event) => setBorderColor(event.target.value)} />
+                    </div>
                 </div>
                 <div className="w-full flex">
                     <TextAreaInput label={'Message Content'} type={'text'} placeholder={'Insert message content'} name={''} value={content} onChange={handleContent} />
@@ -111,7 +123,7 @@ const ToggleDemo = ({ messageType, handleMessageType, messageTitle, handleTitle,
                 <h3 className="text-sm font-semibold text-foreground mb-3">Integration Example</h3>
                 <div className="overflow-x-auto">
                     <pre className="text-xs text-muted-foreground font-mono whitespace-pre">
-                        
+
                         {`import { Notified } from '@notified/react';
 
 // Just add one component to your app

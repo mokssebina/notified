@@ -54,17 +54,11 @@ const NavigationDocs = ({goHome, goToSignin, goToSignup}) => {
                             <a href="#pricing" className="block text-muted-foreground hover:text-foreground transition-colors">
                                 Pricing
                             </a>
-                            <a href="#docs" className="block text-muted-foreground hover:text-foreground transition-colors">
-                                Docs
-                            </a>
-                            <a href="#company" className="block text-muted-foreground hover:text-foreground transition-colors">
-                                Company
-                            </a>
                             <div className="flex flex-col space-y-2 pt-4">
-                                <button className="h-12 rounded-lg border border-primary py-2 px-4 justify-center text-sm mt-14 text-primary data-[hover]:bg-gray-800">
+                                <button onClick={goToSignin} className="h-12 rounded-lg border border-primary py-2 px-4 justify-center text-sm mt-14 text-primary data-[hover]:bg-gray-800">
                                     {'Sign In'}
                                 </button>
-                                <button className="h-12 rounded-lg bg-primary py-2 px-4 justify-center text-sm mt-14 text-white data-[hover]:bg-gray-800">
+                                <button onClick={goToSignup} className="h-12 rounded-lg bg-primary py-2 px-4 justify-center text-sm mt-14 text-white data-[hover]:bg-gray-800">
                                     {'Get Started →'}
                                 </button>
                             </div>

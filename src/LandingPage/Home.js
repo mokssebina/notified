@@ -14,8 +14,9 @@ import FadeWrapper from '../Components/LandingPage/FadeWrapper'
 import Notification from '../Components/LandingPage/Notification'
 import Pricing from '../Components/LandingPage/Pricing'
 
-//////////////---Device imports---////////////////////
+///////////////////---Device imports---////////////////////
 import useDeviceDetection from '../Hooks/useDeviceDetection'
+
 
 
 const LandingPage = () => {
@@ -28,8 +29,9 @@ const LandingPage = () => {
     const [route, setRoute] = useState("")
     const [messageTitle, setMessageTitle] = useState("Error")
     const [content, setContent] = useState("You need to think of a better message.")
-    const [backgroundColor, setBackgroundColor] = useState("#ffffff")
-    const [textColor, setTextColor] = useState("#000000")
+    const [backgroundColor, setBackgroundColor] = useState("#21252b")
+    const [textColor, setTextColor] = useState("#fafafa")
+    const [borderColor, setBorderColor] = useState("#f97015")
     const [visible, setVisible] = useState(false)
 
     const handleMessageType = (event) => {
@@ -60,6 +62,14 @@ const LandingPage = () => {
         navigate('/signup')
     }
 
+    const goToFeatures = () => {
+        navigate('/#features')
+    }
+
+    const goToPricing = () => {
+        navigate('/#pricing')
+    }
+
     const goToDocs = () => {
         navigate('/docs')
     }
@@ -73,6 +83,8 @@ const LandingPage = () => {
                     goHome={goHome}
                     goToSignin={gotoSignin}
                     goToSignup={goToSignup}
+                    //goToFeatures={goToFeatures} 
+                    //goToPricing={goToPricing}
                     goToDocs={goToDocs}
                 />
                 <HeroSection
@@ -87,6 +99,12 @@ const LandingPage = () => {
                     goToSignup={goToSignup}
                     isEnabled={visible}
                     setIsEnabled={() => setVisible(!visible)}
+                    backgroundColor={backgroundColor}
+                    setBackgroundColor={setBackgroundColor}
+                    borderColor={borderColor}
+                    setBorderColor={setBorderColor}
+                    textColor={textColor}
+                    setTextColor={setTextColor}
                 />
                 <FeaturesSection />
                 <Pricing />
@@ -99,7 +117,14 @@ const LandingPage = () => {
 
             {visible &&
                 <FadeWrapper visible={visible} device={device} position={position}>
-                    <Notification messageType={messageType} messageTitle={messageTitle} content={content} />
+                    <Notification
+                        messageType={messageType}
+                        messageTitle={messageTitle}
+                        content={content}
+                        backgroundColor={backgroundColor}
+                        borderColor={borderColor}
+                        textColor={textColor}
+                    />
                 </FadeWrapper>
             }
         </>
