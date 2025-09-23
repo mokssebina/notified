@@ -81,7 +81,7 @@ const MobileSidebar = ({ closeSideNav }) => {
 
                     </div>
 
-                    <div className='relative w-full h-content'>
+                    <div className='relative w-full'>
                         {navRoutes.map((item) => (
                             <NavButton key={item.id} path={item.path} icon={item.icon} title={item.title} />
                         ))}

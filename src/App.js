@@ -8,7 +8,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { AuthContextProvider } from './Context/AuthContext';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import { NotifyProvider } from 'react-notify-sdk';
+import { FeatureMessageProvider } from 'react-notify-sdk';
 import { useAuth } from './Context/AuthContext';
 
 
@@ -20,7 +20,7 @@ function App() {
     <Provider store={store}>
       <AuthContextProvider>
         <BrowserRouter>
-          <NotifyProvider projectKey='LWTqYqSqwZlISK' onClear={session?.user} />
+          <FeatureMessageProvider projectKey='LWTqYqSqwZlISK' />
           <Toaster />
           <AppRoutes />
         </BrowserRouter>

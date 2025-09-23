@@ -54,7 +54,7 @@ const Header = ({ showNav, device }) => {
       <div className='h-full aspect-square mr-auto'>
 
         {device !== 'Desktop' &&
-          <button onClick={showNav} className='relative w-12 h-12 mx-auto my-auto text-center align-middle items-center rounded-lg hover:border-2 border-primary cursor-pointer'>
+          <button onClick={showNav} className='relative w-12 h-12 mx-auto my-auto text-foreground text-center align-middle items-center rounded-lg hover:border-2 border-primary cursor-pointer'>
             <MenuIcon />
           </button>
         }
