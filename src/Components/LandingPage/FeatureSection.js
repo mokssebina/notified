@@ -16,7 +16,7 @@ const FeaturesSection = () => {
     {
       icon: Target,
       title: "Real-time Route-Specific Messages",
-      description: "Instantly notify users about updates, warnings, or feature changes, scoped to the exact route they're on.",
+      description: "Instantly notify users about updates, warnings, or feature changes, scoped to the exact route they're on — no page reload needed.",
       badge: "Core"
     },
     {
@@ -59,7 +59,7 @@ const FeaturesSection = () => {
         </div>
 
         {/* Main Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
           {features.map((feature, index) => (
             <div key={index} className="bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant cursor-pointer group">
               <div className="p-6 space-y-4">
