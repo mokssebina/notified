@@ -18,9 +18,9 @@ const NavButton = ({ path, icon, title }) => {
 
     return (
         <Link to={path}>
-            <div className={`w-full h-12 px-10 mb-1 py-3 flex flex-row space-x-4 rounded-lg cursor-pointer ${location.pathname === path && 'bg-muted border-0 border-primary'} text-foreground hover:border-2 hover:border-muted`}>
+            <div className={`w-full h-12 px-10 mb-1 py-3 flex flex-row space-x-2 rounded-lg cursor-pointer ${location.pathname === path && 'bg-muted border-0 border-primary'} text-foreground hover:border-2 hover:border-muted`}>
                 {icon}
-                <p>{title}</p>
+                <p className='text-sm'>{title}</p>
             </div>
         </Link>
     )

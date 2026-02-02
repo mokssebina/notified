@@ -10,11 +10,12 @@ import { Tooltip } from '@mui/material'
 //////////////---Icon imports---////////////////////
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { PencilSquareIcon, TrashIcon, ClipboardDocumentIcon } from '@heroicons/react/24/outline'
+import { LockClosedIcon } from '@heroicons/react/20/solid'
 
 
 
 
-const ProjectItem = ({ projectName, projectKey, description, editProject, deleteProject, number, copyText }) => {
+const ProjectItem = ({ projectName, projectKey, description, editProject, deleteProject, number, copyText, filered }) => {
     return (
         <Disclosure as="div" className='w-full rounded-lg mb-2 border border-primary'>
 
@@ -46,11 +47,11 @@ const ProjectItem = ({ projectName, projectKey, description, editProject, delete
                     </div>
                     <DisclosurePanel className="text-foreground">
                         <div className='w-full h-auto py-2 px-2 lg:px-4 flex flex-col'>
-                            {number > 0 &&
+                            {/*number > 0 &&
                                 <div className='w-full py-2 flex flex-col md:flex-row'>
-                                    <p className='text-sm md:text-base font-semibold text-left'>{number == 1 ? `${number} Message`: `${number} Messages`}</p>
+                                    <p className='text-sm md:text-base font-semibold text-left'>{number == 1 ? `${number} Message` : `${number} Messages`}</p>
                                 </div>
-                            }
+                            */}
                             <div className='w-full h-16 flex flex-col md:flex-row'>
                                 <p className='text-xs md:text-sm text-left'>{`Description: ${description}`}</p>
                             </div>

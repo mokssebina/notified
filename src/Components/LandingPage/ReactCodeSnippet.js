@@ -8,28 +8,17 @@ const ReactCodeSnippet = () => {
                 <pre className="text-base text-muted-foreground font-mono whitespace-pre">
 
                     {
-                    `// src/App.tsx
+                    `// src/index.tsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { NotifiedProvider } from "@react-notified/react";
+import { FeatureMessagesProvider } from "your-package-name";
 
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <FeatureMessagesProvider projectKey="YOUR_PROJECT_KEY">
+    <App />
+  </FeatureMessagesProvider>
+);
 
-// Make sure the provider is inside the BrowserRouter component 
-function App() {
-    return (
-      <Router>
-
-        {/*------Insert it here------*/}
-        <NotifyProvider projectKey="YOUR_PROJECT_KEY" />
-        
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
-
-      </Router>
-    );
-  }
 
   export default App;
 `}

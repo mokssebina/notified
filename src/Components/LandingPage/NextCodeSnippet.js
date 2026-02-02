@@ -11,7 +11,7 @@ const NextCodeSnippet = () => {
                     `// src/app/layout.tsx
                     "use client";
                     
-import { NotifiedProvider } from "@react-notified/react";
+import { FeatureMessageProvider } from "react-notified-next";
 
 
 // Make sure the provider is inside the BrowserRouter component 
@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
         <body>
-          <NotifyProvider projectKey="YOUR_PROJECT_KEY" />
+          <FeatureMessageProvider projectKey="YOUR_PROJECT_KEY" />
           {children}
         </body>
       </html>

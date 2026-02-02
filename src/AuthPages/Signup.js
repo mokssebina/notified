@@ -162,7 +162,7 @@ const Signup = () => {
 
                 <div className='w-full flex flex-row mt-4'>
                     <p className='text-sm text-foreground mr-1'>Already have an account?</p>
-                    <p onClick={() => navigate('/signin')} className='text-sm text-primary hover:underline cursor-pointer'>Signin here.</p>
+                    <p onClick={() => navigate('/signin')} className='text-sm text-primary hover:underline cursor-pointer'>Sign in here.</p>
                 </div>
 
             </form>

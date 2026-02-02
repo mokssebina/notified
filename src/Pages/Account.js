@@ -49,11 +49,11 @@ const Account = () => {
 
   const accountDetails = useFormik({
     initialValues: {
-      firstName: userProfile ? userProfile[0]?.name : '',
-      lastName: userProfile ? userProfile[0]?.last_name : '',
-      email: userProfile ? userProfile[0]?.email : '',
-      phoneNumber: userProfile ? userProfile[0]?.phone_number : '',
-      accountType: userProfile ? userProfile[0]?.account_type : ''
+      firstName: userProfile ? userProfile?.name : '',
+      lastName: userProfile ? userProfile?.last_name : '',
+      email: userProfile ? userProfile?.email : '',
+      phoneNumber: userProfile ? userProfile?.phone_number : '',
+      accountType: userProfile ? userProfile?.account_type : ''
     },
     validationSchema: validation,
     onSubmit: values => {
@@ -68,12 +68,6 @@ const Account = () => {
       dispatch(editProfile(userDetails))
     }
   })
-
-  useEffect(() => {
-    if (userProfile) {
-      console.log("user profile: ", userProfile)
-    }
-  }, [userProfile])
 
   useEffect(() => {
     if (!edit) {
@@ -151,7 +145,7 @@ const Account = () => {
 
               <div className='w-full md:w-1/2 lg:w-1/3 px-2'>
                 <SimpleInput
-                  disabled={edit}
+                  disabled={true}
                   label={'email'}
                   type={'text'}
                   placeholder={''}
@@ -182,7 +176,7 @@ const Account = () => {
               </div>
               <div className='w-full md:w-1/2 lg:w-1/3 px-2'>
                 <SimpleInput
-                  disabled={edit}
+                  disabled={true}
                   label={'Account Type'}
                   type={'text'}
                   placeholder={''}

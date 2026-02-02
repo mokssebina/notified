@@ -5,6 +5,8 @@ module.exports = {
 		extend: {
 			height: {
 				'content': 'calc(100% - 112px)',
+				'page': 'calc(100vh - 208px)',
+				'pagelayout': 'calc(100vh - 96px)',
 				'pricepanel': 'calc(100vh - 112px)'
 			},
 			backgroundImage: {
@@ -23,6 +25,7 @@ module.exports = {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
+					disabled: 'hsl(var(--primary_disabled))',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {

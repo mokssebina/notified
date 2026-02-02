@@ -115,7 +115,7 @@ const Signin = () => {
 
                 <div className='w-full flex flex-row mt-4'>
                     <p className='text-sm text-foreground mr-1'>Don't have an account?</p>
-                    <p onClick={() => navigate('/signup')} className='text-sm text-primary hover:underline cursor-pointer'>Signup here.</p>
+                    <p onClick={() => navigate('/signup')} className='text-sm text-primary hover:underline cursor-pointer'>Sign up here.</p>
                 </div>
 
                {/*

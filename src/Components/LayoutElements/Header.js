@@ -15,6 +15,7 @@ import { Tooltip } from '@mui/material';
 
 //////////////---Icon imports---////////////////////
 import PaymentsIcon from '@mui/icons-material/Payments';
+import { CircleStackIcon } from '@heroicons/react/24/outline';
 
 //////////////---API imports---////////////////////
 import { getUserProfile } from '../../Pages/Slices/GetUserProfile';
@@ -28,18 +29,10 @@ const Header = ({ showNav, device }) => {
   const { session } = useAuth()
   const dispatch = useDispatch()
   const { userProfile, profileLoading, profileError } = useSelector((state) => state.getuserprofile);
-
-
-  useEffect(() => {
-    if (userProfile) {
-      console.log("user profile: ", userProfile)
-    }
-  }, [])
-
+  const { updateCreditsData, updateCreditsLoader, updateCreditsErrorMessage } = useSelector((state) => state.updateprofilecredits);
 
   useEffect(() => {
-      console.log("get profile")
-      dispatch(getUserProfile(session?.user.id))
+    console.log("user profile: ", userProfile)
   }, [])
 
   useEffect(() => {
@@ -48,8 +41,14 @@ const Header = ({ showNav, device }) => {
     }
   }, [profileError])
 
+  useEffect(() => {
+    if (updateCreditsErrorMessage) {
+      toast.error(updateCreditsErrorMessage)
+    }
+  }, [updateCreditsErrorMessage])
+
   return (
-    <div className='relative w-full h-20 md:h-24 flex flex-row p-2 z-0'>
+    <div className='relative w-full lg:w-10/12 mx-auto h-20 md:h-24 flex flex-row py-2 z-0'>
 
       <div className='h-full aspect-square mr-auto'>
 
@@ -65,8 +64,22 @@ const Header = ({ showNav, device }) => {
         */}
       </div>
 
-      <div className='absolute h-12 right-3 text-center items-center align-middle flex flex-row'>
-        
+      <div className='relative ml-auto h-12 text-white text-center items-center align-middle flex flex-row space-x-2'>
+
+        {profileLoading &&
+          <div className='w-20 h-5 flex flex-row'>
+            <div className='w-2/3 h-full rounded bg-gray-400 animate-pulse'></div>
+            <div className='w-5 h-full rounded ml-auto bg-gray-400 animate-pulse'></div>
+          </div>
+        }
+
+        {(!profileLoading && userProfile) &&
+          <>
+            <p className='text-sm'>{`${userProfile?.credits} credits`}</p>
+            <CircleStackIcon className='size-5' />
+          </>
+        }
+
       </div>
 
       {/*<div className='w-full border-b-2 mt-auto border-gray-950'></div>*/}

@@ -18,6 +18,9 @@ import { useAuth } from '../Context/AuthContext';
 //////////////---Clipboard imports---////////////////////
 import clipboard from 'clipboardy';
 
+//////////////---MUI imports---////////////////////
+import { Tooltip } from '@mui/material'
+
 //////////////---Screen imports---////////////////////
 import PageHeader from '../Components/LayoutElements/PageHeader';
 import ProjectItem from '../Components/ScreenElements/ProjectsPageElements/ProjectItem'
@@ -26,13 +29,14 @@ import EditProjectDialog from '../Components/ScreenElements/ProjectsPageElements
 import DeleteModal from '../Components/ScreenElements/ProjectsPageElements/DeleteModal';
 import ProjectItemLoader from '../Components/ScreenElements/ProjectsPageElements/ProjectItemLoader';
 
-
 //////////////---API imports---////////////////////
 import { resetCreateProject } from './Slices/CreateProject'
 import { resetEditProject } from './Slices/EditProject';
 import { getProjects } from './Slices/GetProjects';
 import { deleteProject, resetDeleteProject } from './Slices/DeleteProject';
-import cactusgif from '../Assets/images/cactus.gif'
+import { updateProfileCredits } from './Slices/UpdateProfileCredits';
+
+
 
 
 const Home = () => {
@@ -41,7 +45,7 @@ const Home = () => {
 
   const dispatch = useDispatch()
   const location = useLocation()
-  const { session } = useAuth()
+  const { session, projectNumber, messages } = useAuth()
 
   ////////////////////// Redux State ///////////////////////////
 
@@ -49,7 +53,7 @@ const Home = () => {
   const { createProjectResponse, createProjectLoading, createProjectError } = useSelector((state) => state.createproject);
   const { editProjectResponse, editProjectLoading, editProjectError } = useSelector((state) => state.editproject);
   const { deleteProjectData, deleteProjectLoading, deleteProjectError } = useSelector((state) => state.deleteproject);
-
+  const { userProfile, profileLoading, profileError } = useSelector((state) => state.getuserprofile);
 
   ////////////////////// State ///////////////////////////
 
@@ -59,6 +63,7 @@ const Home = () => {
   const [projectItem, setProjectItem] = useState(false)
   const [projectDelete, setProjectDelete] = useState(false)
   const [deleteId, setDeleteId] = useState('')
+  const [filterProjects, setFilteredProjects] = useState()
 
   ////////////////////// Create, Edit & Delete modal open/close ///////////////////////////
 
@@ -107,6 +112,12 @@ const Home = () => {
     toast.success('Copied!')
   }
 
+  //////////////////////// User details ////////////////////////////
+
+  useEffect(() => {
+    console.log("user profile: ", userProfile)
+  }, [])
+
   //////////////////////// Get path name ////////////////////////////
 
   useEffect(() => {
@@ -130,6 +141,10 @@ const Home = () => {
       closeNewModal()
       dispatch(resetCreateProject())
       toast.success('You have successfully created a new project!')
+      dispatch(updateProfileCredits({
+        credits: userProfile?.credits - 10,
+        userId: session.user?.id
+      }))
       dispatch(getProjects(session?.user.id))
     }
 
@@ -147,6 +162,10 @@ const Home = () => {
       closeEditModal()
       dispatch(resetEditProject())
       toast.success('You have successfully edited your project.')
+      dispatch(updateProfileCredits({
+        credits: userProfile?.credits - 10,
+        userId: session.user?.id
+      }))
       dispatch(getProjects(session?.user.id))
     }
   }, [editProjectResponse])
@@ -178,6 +197,19 @@ const Home = () => {
     }
   }, [deleteProjectError])
 
+  //////////////////// Filter projects ////////////////////////
+
+  useEffect(() => {
+    if (projects) {
+      console.log("project number: ", projectNumber)
+      setFilteredProjects(projects?.map((project, index) => (
+        index < projectNumber ? { ...project, filtered_project: "filtered" } : project
+      )))
+
+      console.log("filtered: ", filterProjects)
+    }
+  }, [projects])
+
 
   return (
     <>
@@ -198,7 +230,7 @@ const Home = () => {
       <ProjectDialog open={newProjectOpen} closeModal={closeNewModal} userId={session?.user.id} />
       <EditProjectDialog open={editProjectOpen} closeModal={closeEditModal} userId={session?.user.id} editData={editProject} />
       <DeleteModal confirmationText={'Are you sure you want to delete this project?'} open={projectDelete} confirm={confirmProjectDelete} closeConfirm={closeDeleteModal} deleteProjectLoading={deleteProjectLoading} />
-      <div style={{scrollbarWidth: 'none'}} className='relative w-full h-full flex flex-col'>
+      <div style={{ scrollbarWidth: 'none' }} className='relative w-full h-full flex flex-col'>
 
         <div className='w-full lg:w-10/12 flex flex-col py-4 mx-auto'>
 
@@ -206,12 +238,14 @@ const Home = () => {
 
           <div className='w-full h-12 flex flex-row mx-auto'>
 
-            <button onClick={createNew} className='h-12 py-3 px-3 rounded-lg bg-primary text-foreground border border-foreground align-middle'>
-              <div className='flex flex-row space-x-2 align-middle'>
-                <Add />
-                <p>New Project</p>
-              </div>
-            </button>
+            <Tooltip title={userProfile?.credits === 0 && `You have run out of credits. Purchase more to create a new project`}>
+              <button onClick={createNew} disabled={userProfile?.credits === 0} className={`h-12 py-3 px-3 rounded-lg ${userProfile?.credits === 0 ? 'bg-primary/50' : 'bg-primary'} text-foreground border border-foreground align-middle`}>
+                <div className='flex flex-row space-x-2 align-middle'>
+                  <Add />
+                  <p>New Project</p>
+                </div>
+              </button>
+            </Tooltip>
 
             <button onClick={refreshProjects} className='relative h-12 py-3 px-3 ml-auto rounded-lg border border-primary text-primary align-middle'>
               <div className='flex flex-row space-x-2 align-middle'>
@@ -222,24 +256,25 @@ const Home = () => {
 
           </div>
 
-          <div className='w-full mt-12'>
+          <div className='w-full h-page mt-12 overflow-y-auto pr-3'>
 
             {getProjectsLoading && <ProjectItemLoader />}
 
-            {!getProjectsLoading && projects?.slice()
-              .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).map((project) => (
-                <ProjectItem key={project?.id} projectName={project?.title} projectKey={project?.key}
-                  description={project?.description} number={project?.message_count} copyText={() => copyProjectKey(project?.key)}
-                  editProject={() => openEditModal(project)} deleteProject={() => deleteProjectModal(project?.id)}
-                />
-              ))}
+            {!getProjectsLoading && projects?.slice().sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).map((project) => (
+              <ProjectItem key={project?.id} projectName={project?.title} projectKey={project?.key}
+                description={project?.description} number={project?.message_count} copyText={() => copyProjectKey(project?.key)}
+                editProject={() => openEditModal(project)} deleteProject={() => deleteProjectModal(project?.id)}
+              />
+            ))}
 
             {!getProjectsLoading && projects?.length == 0 &&
               <div className='w-full mt-12 md:mt-24'>
                 <p className='font-semibold text-base text-foreground text-center'>You haven't created any projects yet...</p>
+                {/*
                 <div className='w-full h-auto md:w-2/5 mx-auto'>
                   <img alt="desert-cactus" className='w-full aspect-auto' src={cactusgif} />
                 </div>
+                */}
               </div>
             }
 

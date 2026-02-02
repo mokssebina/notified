@@ -5,6 +5,7 @@ import DocsPage from '../LandingPage/DocsPage'
 import Home from '../Pages/Home'
 import Notifications from '../Pages/Notifications'
 import Subscription from '../Pages/Subscription'
+import Upgrade from '../Pages/Upgrade'
 import Account from '../Pages/Account'
 import Documentation from '../Pages/Documentation'
 import { PrivateRoutes } from './PrivateRoutes'
@@ -19,7 +20,7 @@ const AppRoutes = () => {
   const { user, session } = useAuth()
 
   const navigate = useNavigate();
-
+/*
   useEffect(() => {
     const handlePopState = (event) => {
       event.preventDefault();
@@ -32,7 +33,7 @@ const AppRoutes = () => {
       window.removeEventListener("popstate", handlePopState);
     };
   }, [navigate]);
-
+*/
   /*session?.user*/
 
   return (
@@ -55,7 +56,8 @@ const AppRoutes = () => {
         <Route index element={<Navigate to='/projects' />} />
         <Route path={'/projects'} element={<Home />} />
         <Route path={'/messages'} element={<Notifications />} />
-        <Route path={'/subscriptions'} element={<Subscription />} />
+        <Route path={'/purchases'} element={<Subscription />} />
+        <Route path={'/billing/upgrade'} element={<Upgrade />} />
         <Route path={'/account'} element={<Account />} />
         <Route path={'/documentation'} element={<Documentation />} />
 

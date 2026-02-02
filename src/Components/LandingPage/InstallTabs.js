@@ -19,16 +19,16 @@ import { ClipboardDocumentIcon } from '@heroicons/react/24/outline'
 
 
 const installCommands = {
-    npm: "npm install @somepackage/package",
-    yarn: "yarn add @somepackage/package",
+    React: ["npm install react-notified", "yarn add react-notified"],
+    Next: ["npm add react-notified-next", "yarn add react-notified-next"],
 };
 
 export default function InstallTabs() {
 
-    const [activeTab, setActiveTab] = useState("npm");
+    const [activeTab, setActiveTab] = useState("React");
 
-    const copyText = () => {
-        clipboard.write(installCommands[activeTab])
+    const copyText = (value) => {
+        clipboard.write(value)
         toast.success('Copied!')
     }
 
@@ -41,8 +41,8 @@ export default function InstallTabs() {
                         key={tab}
                         onClick={() => setActiveTab(tab)}
                         className={`pb-2 -mb-px transition-colors ${activeTab === tab
-                                ? "text-primary border-b-2 border-primary"
-                                : "text-foreground"
+                            ? "text-primary border-b-2 border-primary"
+                            : "text-foreground"
                             }`}
                     >
                         {tab}
@@ -51,11 +51,15 @@ export default function InstallTabs() {
             </div>
 
             {/* Code block */}
-            <div className="bg-muted text-foreground rounded-xl mt-4 p-4 flex flex-row font-mono text-sm border border-primary/30 shadow-lg shadow-primary/40">
-                <code>{installCommands[activeTab]}</code>
-                <Tooltip title='Copy' className='hidden md:block'>
-                    <ClipboardDocumentIcon onClick={copyText} className={clsx('hidden md:block w-5 cursor-pointer ml-auto')} />
-                </Tooltip>
+            <div className="bg-muted text-foreground rounded-xl mt-4 px-4 pb-4 font-mono text-sm border border-primary/30 shadow-lg shadow-primary/40">
+                {installCommands[activeTab].map((item) => (
+                    <div className="w-full flex flex-row mt-5">
+                        <code>{item}</code>
+                        <Tooltip title='Copy' className='hidden md:block'>
+                            <ClipboardDocumentIcon onClick={() => copyText(item)} className={clsx('hidden md:block w-5 cursor-pointer ml-auto')} />
+                        </Tooltip>
+                    </div>
+                ))}
             </div>
         </div>
     );

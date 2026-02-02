@@ -2,17 +2,18 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react';
 
 //////////////---Headless ui imports---////////////////////
-import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle, Switch, Input } from '@headlessui/react'
+import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle, Switch } from '@headlessui/react'
+import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx';
 
 //////////////---Material UI imports---///////////////
-import { Tooltip, CircularProgress, Divider } from '@mui/material';
+import { Tooltip, CircularProgress } from '@mui/material';
 
 //////////////---Icon imports---////////////////////
 import CloseIcon from '@mui/icons-material/Close';
 
 //////////////---Yup imports---////////////////////
-import * as Yup from 'yup';
+import { object, string, number, date, boolean } from 'yup';
 
 //////////////---Formik imports---////////////////////
 import { useFormik } from 'formik';
@@ -23,12 +24,15 @@ import { useDispatch, useSelector } from 'react-redux';
 //////////////---Context imports---////////////////////
 import { useAuth } from '../../../Context/AuthContext';
 
-//////////////---Screen imports---////////////////////
+//////////////---Input imports---////////////////////
 import SelectInput from '../../Inputs/SelectInput';
 import SimpleInput from '../../Inputs/SimpleInput';
 import AdvancedInput from '../../Inputs/AdvancedInput';
 import TextAreaInput from '../../Inputs/TextAreaInput';
 import ColorInput from '../../Inputs/ColorInput';
+import RadioInputs from '../../Inputs/RadioInputs';
+
+//////////////---Screen imports---////////////////////
 import NotificationPreview from '../../ScreenElements/NotificationsPageElements/NotificationPreview';
 import InputLoader from '../../Loaders/InputLoader';
 
@@ -44,13 +48,42 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        if(selectedProject){
-            console.log("selected project: ",selectedProject)
-        }
-    },[selectedProject])
+    const types = [
+        { id: 1, name: "view only", description: "" },
+        { id: 2, name: "dismiss", description: "This is allows users to dismiss the message once they've read it." },
+        { id: 3, name: "external", description: "This is ideal for navigating users to an external link." },
+        { id: 4, name: "navigate", description: "This is used to navigate user to a different page within the app." }
+    ]
+    const [selected, setSelected] = useState(types[0].name);
 
+
+    const handleChange = (event) => {
+        setSelected(event.target.value);
+    };
+
+    useEffect(() => {
+        if (selectedProject) {
+            console.log("selected project: ", selectedProject)
+        }
+    }, [selectedProject])
+
+    const validations = object({
+        //enabled: boolean().required(),
+        messageType: string().required(),
+        route: string().required(),
+        messageTitle: string().required(),
+        messageContent: string().required(),
+        position: string().required(),
+        //backgroundColor: string().required(),
+        //textColor: string().required(),
+        //borderColor: string().required(),
+        //width: number().required(),
+        //click_url: string().required(),
+        //created: date().required()
+    })
+//'You must specify which route should display the message.'
     const newProjectMessage = useFormik({
+        validationSchema: validations,
         initialValues: {
             enabled: enabled,
             projectKey: selectedProject?.key,
@@ -64,11 +97,13 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
             textColor: textColor,
             borderColor: borderColor,
             width: 80,
+            click_action: selected,
+            click_url: "",
             createdAt: new Date()
         },
         onReset: () => {
-            setBackgroundColor("#ffffff")
-            setTextColor("#000000")
+            setBackgroundColor("#14161a")
+            setTextColor("#ffffff")
         },
         onSubmit: values => {
             //alert(JSON.stringify(values, null, 2));
@@ -86,10 +121,12 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
                 borderColor: borderColor,
                 width: values?.width,
                 borderWidth: 2,
+                click_action: values.click_action,
+                click_url: values.click_url,
             }
             console.log("submitted data: ", data)
             dispatch(submitProjectMessage(data))
-            
+
         }
     })
 
@@ -102,10 +139,14 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
         }
     }, [submitMessageResponse, submitMessageError])
 
+    const reset = () => {
+        newProjectMessage.resetForm()
+    }
+
     return (
         <Dialog open={open} as="div" className="relative z-10 focus:outline-none" onClose={() => { }}>
 
-            <DialogBackdrop className="fixed inset-0 bg-black/70" />
+            <DialogBackdrop className="fixed inset-0 bg-black/70 backdrop-blur-md" />
 
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
 
@@ -122,21 +163,21 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
                                 Create Message
                             </DialogTitle>
 
-                            <button type='button' onClick={close} className='w-9 h-full ml-auto align-middle p-1 text-foreground cursor-pointer'>
+                            <button type='button' onClick={() => { close(); reset() }} className='w-9 h-full ml-auto align-middle p-1 text-foreground cursor-pointer'>
                                 <CloseIcon />
                             </button>
 
                         </div>
 
-                        <div className='relative w-full flex flex-col mx-auto px-3'>
+                        <div className='relative w-full flex flex-col mx-auto pt-5 px-3'>
 
                             <form className='w-full h-full flex flex-col mb-8' onSubmit={newProjectMessage?.handleSubmit} onReset={newProjectMessage?.handleReset}>
 
-                                <div className='relative w-full grid grid-cols-1 sm:grid-cols-2'>
+                                <div className='relative w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'>
 
                                     <div className='relative w-full h-full py-1 md:p-3'>
 
-                                        <div className='w-full flex flex-row mt-5'>
+                                        <div className='w-full flex flex-row'>
 
                                             <p className="text-sm/6 mr-5 text-foreground">Enable Message:</p>
 
@@ -152,24 +193,24 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
 
                                     </div>
 
-                                    <div className='relative w-full h-full px-3'></div>
+                                    <div className='relative w-full h-full px-3'>
+                                        <SimpleInput
+                                            label={'Message Title'}
+                                            type={'text'}
+                                            placeholder={'Insert message title'}
+                                            name={'messageTitle'}
+                                            value={newProjectMessage?.values.messageTitle}
+                                            onChange={newProjectMessage?.handleChange('messageTitle')}
+                                        />
+                                    </div>
+
+                                    <div className='relative w-full h-full flex flex-row md:px-3'>
+                                        <AdvancedInput label={'Target Route'} type={'text'} placeholder={'Insert route name'} name={'route'} value={newProjectMessage?.values.route} onChange={newProjectMessage?.handleChange('route')} />
+                                    </div>
 
                                 </div>
 
-                                <div className='relative w-full grid grid-cols-1 sm:grid-cols-2'>
-
-                                    <div className='relative w-full h-full py-1 md:p-3'>
-                                        <SelectInput
-                                            name={'messageType'}
-                                            label={'Select message type'}
-                                            selectedProject={newProjectMessage?.values.messageType}
-                                            handleSelect={(e) => newProjectMessage?.setFieldValue('messageType', e.target.value)}
-                                            projects={
-                                                messageType?.map((item) => (
-                                                    <option key={item?.id} value={item?.type}>{item?.type}</option>
-                                                ))}
-                                        />
-                                    </div>
+                                <div className='relative w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'>
 
                                     <div className='relative w-full h-full py-1 md:p-3'>
                                         <SelectInput
@@ -184,24 +225,36 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
                                         />
                                     </div>
 
+                                    <div className='relative w-full h-full py-1 md:p-3'>
+                                        <SelectInput
+                                            name={'messageType'}
+                                            label={'Select message type'}
+                                            selectedProject={newProjectMessage?.values.messageType}
+                                            handleSelect={(e) => newProjectMessage?.setFieldValue('messageType', e.target.value)}
+                                            projects={
+                                                messageType?.map((item) => (
+                                                    <option key={item?.id} value={item?.type}>{item?.type}</option>
+                                                ))}
+                                        />
+                                    </div>
+
                                 </div>
 
                                 <div className='relative w-full grid grid-cols-1 sm:grid-cols-2'>
 
-                                    <div className='relative w-full h-full flex flex-row py-1 md:p-3'>
-                                        <AdvancedInput label={'Target Route'} type={'text'} placeholder={'Insert route name'} name={'route'} value={newProjectMessage?.values.route} onChange={newProjectMessage?.handleChange('route')} />
+                                    <div className='relative w-full p-1 md:p-3'>
+
+                                        <div className='relative w-full h-full py-1'>
+                                            <TextAreaInput label={'Message Content'} type={'text'} placeholder={'Insert message content'} name={'messageContent'} value={newProjectMessage?.values.messageContent} onChange={newProjectMessage?.handleChange('messageContent')} />
+                                        </div>
+
                                     </div>
 
-                                    <div className='relative w-full h-full py-1 md:p-3'>
-                                        <SimpleInput label={'Message Title'} type={'text'} placeholder={'Insert message title'} name={'messageTitle'} value={newProjectMessage?.values.messageTitle} onChange={newProjectMessage?.handleChange('messageTitle')} />
-                                    </div>
-
-                                </div>
-
-                                <div className='relative w-full p-1 md:p-3'>
-
-                                    <div className='relative w-full h-full py-1'>
-                                        <TextAreaInput label={'Message Content'} type={'text'} placeholder={'Insert message content'} name={'messageContent'} value={newProjectMessage?.values.messageContent} onChange={newProjectMessage?.handleChange('messageContent')} />
+                                    <div className='relative w-full flex flex-col p-1 md:p-3'>
+                                        <p className="text-foreground mr-2 mb-2">Action Type</p>
+                                        <div className='relative w-full'>
+                                            <RadioInputs types={types} selected={selected} handleChange={handleChange} />
+                                        </div>
                                     </div>
 
                                 </div>
@@ -231,7 +284,7 @@ const CreateNotification = ({ open, close, enabled, setEnabled, selectedProject,
 
                                 <div className='relative w-full p-3'>
 
-                                    <NotificationPreview label={'Preview'} textColor={textColor} backgroundColor={backgroundColor} borderColor={borderColor} type={newProjectMessage?.values.messageType} title={newProjectMessage?.values.messageTitle} content={newProjectMessage?.values.messageContent} />
+                                    <NotificationPreview label={'Preview'} textColor={textColor} backgroundColor={backgroundColor} borderColor={borderColor} type={newProjectMessage?.values.messageType} title={newProjectMessage?.values.messageTitle} content={newProjectMessage?.values.messageContent} selected={selected} />
 
                                 </div>
 

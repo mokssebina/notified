@@ -13,7 +13,7 @@ import clsx from 'clsx'
 
 
 
-const NotificationItem = ({ title, projectKey, enabled, position, content, route, type, editMessage, deleteMessage }) => {
+const NotificationItem = ({ title, projectKey, enabled, position, content, route, type, editMessage, deleteMessage, filtered }) => {
     return (
         <Disclosure as="div" className='w-full rounded-lg mb-2 border border-primary'>
 
@@ -22,7 +22,7 @@ const NotificationItem = ({ title, projectKey, enabled, position, content, route
                     <div className="w-full py-2 px-2 lg:px-4">
                         <div className='w-full h-12 flex flex-row'>
                             <div className='w-1/2 h-full flex flex-row items-center'>
-                                <Tooltip title='Edit the project description'>
+                                <Tooltip title={filtered ? '' : 'You do not have enough credits tro edit this message. Please ourchase more to edit the message.'}>
                                     <PencilSquareIcon onClick={editMessage} className={clsx('w-5 text-foreground cursor-pointer')} />
                                 </Tooltip>
                                 <p className='text-sm md:text-base text-foreground text-left ml-6'>{`Title:  ${title}`}</p>

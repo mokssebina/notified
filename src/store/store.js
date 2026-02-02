@@ -14,6 +14,9 @@ import ProfileUpdate from '../Pages/Slices/ProfileUpdate';
 import EditProfileUpdate from '../Pages/Slices/EditProfileUpdate';
 import SignUpUserSlice from '../AuthPages/SignupSlice/SignUpUserSlice';
 import SignUpOauthSlice from '../AuthPages/SignupSlice/SignUpOauthSlice';
+import GetPurchasesSlice from '../Pages/Slices/GetPurchasesSlice';
+import UpdateProfileCredits from '../Pages/Slices/UpdateProfileCredits';
+import UpdatePurchases from '../Pages/Slices/UpdatePurchases';
 
 
 export const store = configureStore({
@@ -33,6 +36,9 @@ export const store = configureStore({
     deleteproject: DeleteProject,
     signin: SignInSlice,
     signup: SignUpUserSlice,
-    signupoauth: SignUpOauthSlice
+    signupoauth: SignUpOauthSlice,
+    getpurchases: GetPurchasesSlice,
+    updateprofilecredits: UpdateProfileCredits,
+    updatepurchases: UpdatePurchases
   },
 })

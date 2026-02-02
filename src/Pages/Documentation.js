@@ -7,7 +7,7 @@ import SnippetTabs from '../Components/LandingPage/SnippetTabs'
 
 const Documentation = () => {
     return (
-        <div className='w-full h-full flex flex-col bg-background p-3 overscroll-none'>
+        <div className='w-full h-pagelayout flex flex-col bg-background p-3 overflow-y-auto'>
 
             <div className='w-full flex flex-row'>
 

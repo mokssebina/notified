@@ -26,6 +26,9 @@ import { useDispatch, useSelector } from 'react-redux';
 //////////////---Toast imports---////////////////////
 import { toast } from 'react-hot-toast';
 
+//////////////---Toast imports---////////////////////
+import { useAuth } from '../Context/AuthContext';
+
 //////////////---Screen imports---////////////////////
 import PageHeader from '../Components/LayoutElements/PageHeader';
 import SelectInput from '../Components/Inputs/SelectInput';
@@ -40,6 +43,7 @@ import { getProjectMessages, resetGetProjectMessages } from './Slices/GetMessage
 import { resetUpdateMessageResponse, resetUpdateMessage } from './Slices/UpdateMessageSlice';
 import { deleteMessage, resetDeleteMessage } from './Slices/DeleteMessageSlice';
 import { resetSubmitMessage } from './Slices/SubmitMessageSlice';
+import { updateProfileCredits } from './Slices/UpdateProfileCredits';
 import { updateProject } from './Slices/UpdateProject';
 
 
@@ -49,12 +53,14 @@ const Notifications = () => {
     const dispatch = useDispatch()
     const location = useLocation()
 
+    const { session, projectNumber, messages } = useAuth()
+
     const { projects, getProjectsLoading, getProjectsError } = useSelector((state) => state.getprojects);
     const { projectMessages, projectMessagesLoading, projectMessagesError } = useSelector((state) => state.getprojectmessages);
     const { submitMessageResponse, submitMessageLoading, submitMessageError } = useSelector((state) => state.submitmessage);
     const { updatedMessage, updatedMessageLoading, updatedMessageError } = useSelector((state) => state.updateprojectmessage);
     const { deletedMessage, deletedMessageLoading, deletedMessageError } = useSelector((state) => state.deletemessage);
-
+    const { userProfile, profileLoading, profileError } = useSelector((state) => state.getuserprofile);
 
     const [selectedId, setSelectedId] = useState('')
     const [selectedProject, setSelectedProject] = useState(null)
@@ -67,6 +73,7 @@ const Notifications = () => {
     const [borderColor, setBorderColor] = useState('#f97015')
     const [messageDelete, setMessageDelete] = useState(false)
     const [messageId, setMessageId] = useState('')
+    const [filteredProjects, setFilteredProjects] = useState()
 
     /*
     let messagePosition = [
@@ -78,6 +85,7 @@ const Notifications = () => {
         { id: 1, position: 'Top of page', value: 'top' },
         { id: 2, position: 'Bottom of page', value: 'bottom' }
     ]
+
     let messageType = [
         { id: 1, type: 'Information' },
         { id: 2, type: 'Warning' },
@@ -87,7 +95,7 @@ const Notifications = () => {
     const handleSelect = (event) => {
         console.log("selected item: ", event.target.value)
         setSelectedId(event.target.value);
-        const selected = projects.find((item) => item.id.toString() === event.target.value);
+        const selected = filteredProjects.find((item) => item.id.toString() === event.target.value);
         setSelectedProject(selected);
         if (selected) {
             dispatch(getProjectMessages(selected.key));
@@ -105,6 +113,7 @@ const Notifications = () => {
     }, [selectedProject])
 
     const createNewMessage = () => {
+        console.log("clicked")
         setNewMessage(true)
     }
 
@@ -120,43 +129,60 @@ const Notifications = () => {
 
     const closeCreate = () => {
         setNewMessage(false)
-        setSelectedId('')
-        setSelectedProject(null)
-        dispatch(resetGetProjectMessages())
+        setBackgroundColor('#14161a')
+        setTextColor('#fafafa')
+        setBorderColor('#f97015')
+        //setSelectedId('')
+        //setSelectedProject(null)
+        //dispatch(resetGetProjectMessages())
     }
 
     const closeEdit = () => {
         console.log("console log: ", 'closed')
         setEditMessage(false)
-        setSelectedId('')
-        setSelectedProject(null)
+        //setSelectedId('')
+        //setSelectedProject(null)
         setEditMessageItem(null)
         setBackgroundColor('#14161a')
         setTextColor('#fafafa')
         setBorderColor('#f97015')
-        dispatch(resetGetProjectMessages())
+        //dispatch(resetGetProjectMessages())
     }
+
+    //////////////////// Filter projects ////////////////////////
+
+    useEffect(() => {
+        if (projects) {
+            console.log("loaded projects: ", projects)
+            setFilteredProjects(projects?.map((project, index) => (
+                index < projectNumber ? { ...project, filtered_project: "filtered" } : project
+            )))
+
+            console.log("filtered: ", filteredProjects)
+        }
+    }, [projects])
 
     //////////////////// Create message feedback & cleanup ////////////////////////
 
     useEffect(() => {
-        if (submitMessageResponse) {
-            console.log("projects exist")
+        if (submitMessageResponse?.length) {
             toast.success("The notification has been created.")
-            if(selectedProject?.key){
-                dispatch(getProjectMessages(selectedProject?.key))
-            }
+            console.log("selected project key: ",selectedProject?.key)
+            dispatch(getProjectMessages(selectedProject?.key))
             dispatch(resetSubmitMessage())
             setNewMessage(false)
             setSelectedProject(null)
+            dispatch(updateProfileCredits({
+                credits: userProfile?.credits - 5,
+                userId: session.user?.id
+            }))
         }
-    }, [submitMessageResponse])
 
-    useEffect(() => {
         if (submitMessageError) {
             console.log("projects exist")
             toast.error(submitMessageError)
             if (selectedProject?.key) {
+                console.log("selected project: ",selectedProject?.key)
                 dispatch(getProjectMessages(selectedProject?.key));
             }
             dispatch(resetSubmitMessage())
@@ -164,18 +190,23 @@ const Notifications = () => {
             setSelectedId('')
             setSelectedProject(null)
         }
-    }, [submitMessageError])
+
+    }, [submitMessageResponse, submitMessageError])
 
     //////////////////// Update message feedback & cleanup ////////////////////////
 
     useEffect(() => {
 
-        if (updatedMessage) {
+        if (updatedMessage?.length) {
             toast.success("The notification has been updated.")
             dispatch(resetUpdateMessageResponse())
             dispatch(getProjectMessages(editMessageItem?.project_key))
             setEditMessageItem(null)
             setEditMessage(false)
+            dispatch(updateProfileCredits({
+                credits: userProfile?.credits - 5,
+                userId: session.user?.id
+            }))
         }
 
         if (updatedMessageError) {
@@ -209,6 +240,7 @@ const Notifications = () => {
     useEffect(() => {
         if (deletedMessage) {
             toast.success("The message has been deleted.")
+            dispatch(getProjectMessages(selectedProject?.key))
             setMessageDelete(false)
             setMessageId('')
             dispatch(resetDeleteMessage())
@@ -222,10 +254,24 @@ const Notifications = () => {
         }
     }, [deletedMessage, deletedMessageError])
 
+    const createButton = () => {
+        if (userProfile?.credits > 0) {
+            return false
+        } else {
+            return true
+        }
+    }
+
+
     return (
         <div className='relative w-full h-full flex flex-col mx-auto rounded-lg'>
 
-            <DeleteModal confirmationText={'Are you sure you want to delete this message?'} open={messageDelete} confirm={confirmMessageDelete} closeConfirm={closeDeleteModal} deleteProjectLoading={deletedMessageLoading} />
+            <DeleteModal
+                confirmationText={'Are you sure you want to delete this message?'}
+                open={messageDelete} confirm={confirmMessageDelete}
+                closeConfirm={closeDeleteModal}
+                deleteProjectLoading={deletedMessageLoading}
+            />
 
             <UpdateNotification
                 open={editMessage}
@@ -287,14 +333,19 @@ const Notifications = () => {
 
                     <div className={`w-full md:w-1/2 flex flex-row`}>
 
-                        <Tooltip title={!selectedProject && "Select a project to create a notification."}>
-                            <button disabled={!selectedProject} onClick={createNewMessage} className={`w-40 h-12 md:ml-auto px-3 mt-4 md:mt-6 rounded-lg border border-foreground ${!selectedProject ? 'bg-primary/50' : 'bg-primary'} text-foreground align-middle`}>
-                                <div className='flex flex-row space-x-2 align-middle'>
-                                    <Add />
-                                    <p>Create New</p>
-                                </div>
-                            </button>
-                        </Tooltip>
+                        {selectedProject &&
+                            <Tooltip title={userProfile?.credits === 0 && 'You are out of credits. You need to purchase more to create new messages.'}>
+                                <button
+                                    disabled={userProfile?.credits ? false : true}
+                                    onClick={createNewMessage}
+                                    className={`w-40 h-12 md:ml-auto px-3 mt-4 md:mt-6 rounded-lg border border-foreground ${userProfile?.credits > 0 ? 'bg-primary' : 'bg-primary/50'} text-foreground align-middle`}>
+                                    <div className='flex flex-row space-x-2 align-middle'>
+                                        <Add />
+                                        <p>Create New</p>
+                                    </div>
+                                </button>
+                            </Tooltip>
+                        }
 
                     </div>
 
@@ -302,11 +353,11 @@ const Notifications = () => {
 
             </div>
 
-            <div className='w-full lg:w-10/12 flex flex-col mt-12 mx-auto'>
+            <div className='w-full h-page lg:w-10/12 mt-12 mx-auto overflow-y-auto pr-3'>
 
                 {selectedProject &&
 
-                    <div className='w-full'>
+                    <>
 
                         {projectMessagesLoading && <NotificationLoaderItem />}
 
@@ -315,8 +366,9 @@ const Notifications = () => {
                                 {projectMessages?.slice()
                                     .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).map((item) => (
                                         <NotificationItem key={item?.id} title={item?.title} projectKey={item?.project_key} content={item?.content}
-                                            enabled={item?.is_active} position={item?.position} route={item?.route} type={item?.type} editMessage={() => openEditMessage(item)}
-                                            deleteMessage={() => openDeleteMessage(item?.id)}
+                                            enabled={item?.is_active} position={item?.position} route={item?.route} type={item?.type}
+                                            editMessage={userProfile?.credits > 0 ? () => openEditMessage(item) : null}
+                                            deleteMessage={() => openDeleteMessage(item?.id)} filtered={userProfile?.credits > 0}
                                         />
                                     ))}
                             </>
@@ -324,7 +376,7 @@ const Notifications = () => {
 
                         {(!projectMessagesLoading && !projectMessages?.length) && <p className='font-semibold text-sm text-gray-500 mt-6'>There are no message for this project...</p>}
 
-                    </div>
+                    </>
 
                 }
 
@@ -335,7 +387,3 @@ const Notifications = () => {
 }
 
 export default Notifications
-
-{/*newMessage &&
-    
-*/}

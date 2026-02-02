@@ -108,9 +108,7 @@ const LandingPage = () => {
                 />
                 <FeaturesSection />
                 <Pricing />
-                <CtaSection
-                    goToSignup={goToSignup}
-                />
+                <CtaSection goToSignup={goToSignup} />
                 <Footer />
 
             </div>

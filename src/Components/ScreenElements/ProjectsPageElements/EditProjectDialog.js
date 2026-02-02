@@ -80,12 +80,12 @@ const EditProjectDialog = ({ open, closeModal, userId, editData }) => {
 
   return (
     <Dialog open={open} as="div" className="relative z-10 focus:outline-none" onClose={() => { }}>
-      <DialogBackdrop className="fixed inset-0 bg-black/70" />
+      <DialogBackdrop className="fixed inset-0 bg-black/70 backdrop-blur-md" />
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel
             transition
-            className="w0full sm:w-96 flex flex-col rounded-lg p-6 border border-primary/30 shadow-lg shadow-primary/40 backdrop-blur-2xl bg-background duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+            className="w-full sm:w-96 flex flex-col rounded-lg p-6 border border-primary/30 shadow-lg shadow-primary/40 backdrop-blur-2xl bg-background duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
           >
             <div className='w-full h-9 flex flex-col'>
               <DialogTitle as="h3" className="text-base/7 font-medium text-foreground">

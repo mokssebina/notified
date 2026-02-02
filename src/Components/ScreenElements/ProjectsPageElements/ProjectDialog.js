@@ -56,7 +56,8 @@ const ProjectDialog = ({ open, closeModal, userId }) => {
         title: values.title,
         created_at: new Date(),
         description: values.description,
-        message_count: 0
+        message_count: 0,
+        filtered_project: null
       }
 
       console.log("create project")
@@ -82,7 +83,7 @@ const ProjectDialog = ({ open, closeModal, userId }) => {
 
   return (
     <Dialog open={open} as="div" className="relative z-10 focus:outline-none" onClose={() => { }}>
-      <DialogBackdrop className="fixed inset-0 bg-black/70" />
+      <DialogBackdrop className="fixed inset-0 bg-black/70 backdrop-blur-md" />
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel

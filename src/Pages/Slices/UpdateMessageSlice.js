@@ -17,6 +17,8 @@ export const updateProjectMessage = createAsyncThunk("updateprojectmessage/updat
                 "backgroundColor": messageData?.backgroundColor,
                 "textColor": messageData?.textColor,
                 "borderColor": messageData?.textColor,
+                "click_action": messageData?.click_action,
+                "click_url": messageData?.click_url,
             })
             .eq('id', messageData?.id)
             .select()

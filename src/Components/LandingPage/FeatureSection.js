@@ -22,7 +22,7 @@ const FeaturesSection = () => {
     {
       icon: Zap,
       title: "Plug-and-Play SDK",
-      description: "Minimal integration effort—developers can add the library to React or Next.js projects with a few lines of code.",
+      description: "Developers just install the package, provide a project key, and they’re live in minutes.",
       badge: "Core"
     },
     {
@@ -59,7 +59,7 @@ const FeaturesSection = () => {
         </div>
 
         {/* Main Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {features.map((feature, index) => (
             <div key={index} className="bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant cursor-pointer group">
               <div className="p-6 space-y-4">

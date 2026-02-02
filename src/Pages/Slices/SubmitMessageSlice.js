@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { supabase } from "../../supabase/supabaseClient";
 
 
-export const submitProjectMessage = createAsyncThunk("submitmessage/submitProjectMessage",async (messageData, { rejectWithValue }) => {
-    try {
+export const submitProjectMessage = createAsyncThunk("submitmessage/submitProjectMessage", async (messageData, { rejectWithValue }) => {
+  try {
 
-      const { data, error } = await supabase
+    const { data, error } = await supabase
       .from("feature_messages")
       .insert({
         "is_active": messageData?.enabled,
@@ -21,18 +21,20 @@ export const submitProjectMessage = createAsyncThunk("submitmessage/submitProjec
         "borderColor": messageData?.textColor,
         "width": messageData?.width,
         "borderWidth": messageData?.borderWidth,
+        "click_action": messageData?.click_action,
+        "click_url": messageData?.click_url,
         "created_at": new Date()
-    })
+      })
       .select()
 
-      if (error) throw error;
-      console.log("response: ",data)
-      return data;
-      
-    } catch (error) {
-      return rejectWithValue(error.message || "Failed to submit message");
-    }
+    if (error) throw error;
+    console.log("response: ", data)
+    return data;
+
+  } catch (error) {
+    return rejectWithValue(error.message || "Failed to submit message");
   }
+}
 );
 
 const initialState = {

@@ -16,6 +16,7 @@ const CtaSection = ({goToSignup}) => {
                 <div className="max-w-4xl mx-auto text-center space-y-8">
                     {/* Main CTA */}
                     <div className="space-y-6">
+                        {/*
                         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
                             Ready to add contextual
                             <br />
@@ -23,20 +24,21 @@ const CtaSection = ({goToSignup}) => {
                                 status messages?
                             </span>
                         </h2>
+                        */}
                         <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-                            Join developers using notified to reduce support tickets and keep users informed
+                            Join developers using React notified to reduce support tickets and keep users informed
                             with route-specific, real-time status communication.
                         </p>
                     </div>
 
                     {/* Benefits */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-2xl mx-auto">
-                        {benefits.map((benefit, index) => (
+                        {/*benefits.map((benefit, index) => (
                             <div key={index} className="flex items-start space-x-3 text-left">
                                 <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0 mt-0.5" />
                                 <span className="text-sm sm:text-base text-muted-foreground">{benefit}</span>
                             </div>
-                        ))}
+                        ))*/}
                     </div>
 
                     {/* CTA Buttons */}

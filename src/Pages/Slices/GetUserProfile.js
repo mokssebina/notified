@@ -7,13 +7,14 @@ export const getUserProfile = createAsyncThunk("getuserprofile/getUserProfile",a
       const { data, error } = await supabase
       .from("user_profiles")
       .select()
-      .eq('user_id', id);
+      .eq('user_id', id)
+      .single();
 
       if (error) throw error;
-      console.log("messages response: ",data)
+      console.log("profile response: ",data)
       return data;
     } catch (error) {
-      return rejectWithValue(error.message || "Failed to fetch cards");
+      return rejectWithValue(error.message || "Failed to fetch profile");
     }
   }
 );
@@ -22,7 +23,7 @@ export const getUserProfile = createAsyncThunk("getuserprofile/getUserProfile",a
 const getUserProfileSlice = createSlice({
   name: "getuserprofile",
   initialState: {
-    userProfile: [],
+    userProfile: null,
     profileLoading: false,
     profileError: null,
   },
@@ -39,7 +40,7 @@ const getUserProfileSlice = createSlice({
       })
       .addCase(getUserProfile.rejected, (state, action) => {
         state.profileLoading = false;
-        state.profileError = action.error.message;
+        state.profileError = action.payload || action.error.message;
       })
   },
 });
