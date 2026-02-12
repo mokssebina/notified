@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 //////////////---Navigation imports---////////////////////
 import { useNavigate } from 'react-router-dom'
@@ -20,6 +20,8 @@ import useDeviceDetection from '../Hooks/useDeviceDetection'
 
 
 const LandingPage = () => {
+
+    
 
     const navigate = useNavigate()
     const device = useDeviceDetection()

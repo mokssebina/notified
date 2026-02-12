@@ -42,6 +42,10 @@ import logoImage from '../Assets/images/notified_logo-02.png'
 
 const Signin = () => {
 
+    useEffect(() => {
+        console.log("base url: ",window.location.origin)
+    })
+
     const { loading, signInWithEmail } = useAuth()
     const navigate = useNavigate()
     const dispatch = useDispatch()
