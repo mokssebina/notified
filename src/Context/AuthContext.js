@@ -96,10 +96,12 @@ const AuthContextProvider = ({ children }) => {
   const signOut = async () => {
 
     try {
+
       if (localStorage.getItem("__feature_messages_dismissed__") !== null) {
         localStorage.removeItem("__feature_messages_dismissed__");
       }
       const { error } = await supabase.auth.signOut()
+      
     } catch (error) {
 
     }
