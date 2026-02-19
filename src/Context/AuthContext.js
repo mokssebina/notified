@@ -95,7 +95,14 @@ const AuthContextProvider = ({ children }) => {
 
   const signOut = async () => {
 
-    const { error } = await supabase.auth.signOut()
+    try {
+      if (localStorage.getItem("__feature_messages_dismissed__") !== null) {
+        localStorage.removeItem("__feature_messages_dismissed__");
+      }
+      const { error } = await supabase.auth.signOut()
+    } catch (error) {
+
+    }
 
   }
 
@@ -129,10 +136,10 @@ const AuthContextProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    if(updateCreditsData){
+    if (updateCreditsData) {
       dispatch(getUserProfile(session?.user.id))
     }
-  },[updateCreditsData])
+  }, [updateCreditsData])
 
 
   useEffect(() => {
@@ -162,8 +169,8 @@ const AuthContextProvider = ({ children }) => {
               purchased_at: new Date(),
               price_id: checkoutData?.data.items[0]?.price_id
             })
-            console.log("quantity: ",itemQuantity)
-            console.log("new credits value: ",userProfile?.credits + itemQuantity)
+            console.log("quantity: ", itemQuantity)
+            console.log("new credits value: ", userProfile?.credits + itemQuantity)
             dispatch(updateProfileCredits({
               credits: userProfile?.credits + itemQuantity,
               userId: session.user?.id
